@@ -202,7 +202,7 @@ export default class TasklyPlugin extends Plugin {
 		this.addSettingTab(new TasklySettingTab(this.app, this));
 
 		// Early registration attempt for Bases integration
-		if (this.settings?.enableBases && !this.basesRegistered) {
+		if (!this.basesRegistered) {
 			try {
 				const { registerBasesTaskList } = await import("./bases/registration");
 				await registerBasesTaskList(this);
@@ -297,7 +297,7 @@ export default class TasklyPlugin extends Plugin {
 			this.initializeServicesLazily();
 
 			// Register Taskly views with Bases plugin (if enabled and not already registered)
-			if (this.settings?.enableBases && !this.basesRegistered) {
+			if (!this.basesRegistered) {
 				try {
 					const { registerBasesTaskList } = await import("./bases/registration");
 					await registerBasesTaskList(this);
@@ -534,14 +534,12 @@ export default class TasklyPlugin extends Plugin {
 
 	onunload() {
 		// Unregister Bases views
-		if (this.settings?.enableBases) {
-			import("./bases/registration").then(({ unregisterBasesViews }) => {
-				unregisterBasesViews(this);
-				this.basesRegistered = false;
-			}).catch(e => {
-				console.debug("[Taskly][Bases] Unregistration failed:", e);
-			});
-		}
+		import("./bases/registration").then(({ unregisterBasesViews }) => {
+			unregisterBasesViews(this);
+			this.basesRegistered = false;
+		}).catch(e => {
+			console.debug("[Taskly][Bases] Unregistration failed:", e);
+		});
 
 		// Clean up performance monitoring
 		const cacheStats = perfMonitor.getStats("cache-initialization");

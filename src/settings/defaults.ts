@@ -108,8 +108,6 @@ export const DEFAULT_SETTINGS: TasklySettings = {
 	doubleClickAction: "openNote",
 	// Inline task conversion defaults
 	inlineTaskConvertFolder: "{{currentNotePath}}",
-	// Suggestion performance defaults
-	suggestionDebounceMs: 0,
 	// Customization defaults
 	fieldMapping: DEFAULT_FIELD_MAPPING,
 	customStatuses: DEFAULT_STATUSES,
@@ -135,7 +133,6 @@ export const DEFAULT_SETTINGS: TasklySettings = {
 	// Default visible properties for inline task cards (more compact by default)
 	inlineVisibleProperties: ["status", "due", "recurrence"],
 	// Bases integration defaults
-	enableBases: true,
 	enableBasesSWR: true,
 	// Command-to-file mappings for view commands (v4)
 	commandFileMapping: {

@@ -9,7 +9,6 @@ import { registerBasesView, unregisterBasesView } from "./api";
  * Requires Obsidian 1.10.1+ (public Bases API with groupBy support)
  */
 export async function registerBasesTaskList(plugin: TasklyPlugin): Promise<void> {
-	if (!plugin.settings.enableBases) return;
 	// All views now require Obsidian 1.10.1+ (public Bases API with groupBy support)
 	if (!requireApiVersion("1.10.1")) return;
 

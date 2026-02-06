@@ -51,8 +51,8 @@
  * const statusBadge = createStatusBadge('Active', 'active');
  * const card = createCard(container, {
  *   header: {
- *     primaryText: "Webhook #1",
- *     secondaryText: "https://api.example.com/webhook",
+ *     primaryText: "Item #1",
+ *     secondaryText: "Description text",
  *     meta: [statusBadge],
  *     actions: [createDeleteHeaderButton(() => deleteItem(id))]
  *   }

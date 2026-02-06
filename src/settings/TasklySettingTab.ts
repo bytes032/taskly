@@ -1,11 +1,10 @@
-import { App, PluginSettingTab, Platform, requireApiVersion } from "obsidian";
+import { App, PluginSettingTab, requireApiVersion } from "obsidian";
 import TasklyPlugin from "../main";
 import { debounce, DebouncedFunction } from "./components/settingHelpers";
 import { renderGeneralTab } from "./tabs/generalTab";
 import { renderTaskPropertiesTab } from "./tabs/taskPropertiesTab";
 import { renderAppearanceTab } from "./tabs/appearanceTab";
 import { renderFeaturesTab } from "./tabs/featuresTab";
-import { renderIntegrationsTab } from "./tabs/integrationsTab";
 
 interface TabConfig {
 	id: string;
@@ -44,22 +43,7 @@ export class TasklySettingTab extends PluginSettingTab {
 		// Create tab navigation
 		const tabNav = containerEl.createDiv("settings-tab-nav settings-view__tab-nav");
 
-		// Define the 5-tab structure (defaults merged into task-properties)
-		const allTabs = this.getTabConfigurations();
-
-		// Filter out integrations tab on mobile if it only contains API settings
-		const tabs = Platform.isMobile
-			? allTabs.filter((tab) => tab.id !== "integrations" || this.hasNonAPIIntegrations())
-			: allTabs;
-
-		// Reset active tab if it's filtered out on mobile
-		if (
-			Platform.isMobile &&
-			this.activeTab === "integrations" &&
-			!this.hasNonAPIIntegrations()
-		) {
-			this.activeTab = "general";
-		}
+		const tabs = this.getTabConfigurations();
 
 		// Create tab buttons
 		tabs.forEach((tab) => {
@@ -185,18 +169,7 @@ export class TasklySettingTab extends PluginSettingTab {
 				name: "Features",
 				renderFn: renderFeaturesTab,
 			},
-			{
-				id: "integrations",
-				name: "Integrations",
-				renderFn: renderIntegrationsTab,
-			},
-		];
-	}
-
-	private hasNonAPIIntegrations(): boolean {
-		// Check if there are integrations other than HTTP API that work on mobile
-		// Currently: Webhooks are available on mobile.
-		return true;
+			];
 	}
 
 	/**

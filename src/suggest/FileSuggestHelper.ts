@@ -149,20 +149,6 @@ export const FileSuggestHelper = {
 			return out;
 		};
 
-		const debounceMs = plugin.settings?.suggestionDebounceMs ?? 0;
-		if (!debounceMs) {
-			return run();
-		}
-
-		return new Promise<FileSuggestionItem[]>((resolve) => {
-			const anyPlugin = plugin as unknown as { __fileSuggestTimer?: number };
-			if (anyPlugin.__fileSuggestTimer) {
-				clearTimeout(anyPlugin.__fileSuggestTimer);
-			}
-			anyPlugin.__fileSuggestTimer = setTimeout(async () => {
-				const results = await run();
-				resolve(results);
-			}, debounceMs) as unknown as number;
-		});
+		return run();
 	},
 };

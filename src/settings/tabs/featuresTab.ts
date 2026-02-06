@@ -1,11 +1,13 @@
-import { Notice } from "obsidian";
+import { Notice, Platform } from "obsidian";
 import TasklyPlugin from "../../main";
 import {
 	createSettingGroup,
 	configureTextSetting,
 	configureToggleSetting,
 	configureDropdownSetting,
+	configureNumberSetting,
 } from "../components/settingHelpers";
+
 import { PropertySelectorModal } from "../../modals/PropertySelectorModal";
 import { getAvailableProperties, getPropertyLabels } from "../../utils/propertyHelpers";
 import { formatString } from "../../utils/stringFormat";
@@ -243,4 +245,59 @@ export function renderFeaturesTab(
 			});
 		}
 	);
+
+	// HTTP API Section (desktop only)
+	if (!Platform.isMobile) {
+		createSettingGroup(
+			container,
+			{
+				heading: "HTTP API",
+				description: "Enable HTTP API for external integrations and automations.",
+			},
+			(group) => {
+				group.addSetting((setting) =>
+					configureToggleSetting(setting, {
+						name: "Enable HTTP API",
+						desc: "Start local HTTP server for API access",
+						getValue: () => plugin.settings.enableAPI,
+						setValue: async (value: boolean) => {
+							plugin.settings.enableAPI = value;
+							save();
+							renderFeaturesTab(container, plugin, save);
+						},
+					})
+				);
+
+				if (plugin.settings.enableAPI) {
+					group.addSetting((setting) =>
+						configureNumberSetting(setting, {
+							name: "API port",
+							desc: "Port number for the HTTP API server",
+							placeholder: "8080",
+							min: 1024,
+							max: 65535,
+							getValue: () => plugin.settings.apiPort,
+							setValue: async (value: number) => {
+								plugin.settings.apiPort = value;
+								save();
+							},
+						})
+					);
+
+					group.addSetting((setting) =>
+						configureTextSetting(setting, {
+							name: "API authentication token",
+							desc: "Token required for API authentication (leave empty for no auth)",
+							placeholder: "your-secret-token",
+							getValue: () => plugin.settings.apiAuthToken,
+							setValue: async (value: string) => {
+								plugin.settings.apiAuthToken = value;
+								save();
+							},
+						})
+					);
+				}
+			}
+		);
+	}
 }

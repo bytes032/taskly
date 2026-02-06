@@ -56,8 +56,6 @@ export interface TasklySettings {
 	doubleClickAction: "openNote" | "none";
 	// Inline task conversion settings
 	inlineTaskConvertFolder: string; // Folder for inline task conversion, supports {{currentNotePath}} and {{currentNoteTitle}}
-	/** Optional debounce in milliseconds for inline file suggestions (0 = disabled) */
-	suggestionDebounceMs?: number;
 	// Customization settings
 	fieldMapping: FieldMapping;
 	customStatuses: StatusConfig[];
@@ -79,7 +77,6 @@ export interface TasklySettings {
 	// Default visible properties for inline task cards (task link widgets in editor)
 	inlineVisibleProperties?: string[];
 	// Bases integration settings
-	enableBases: boolean;
 	enableBasesSWR: boolean;
 	// Command-to-file mappings for view commands (v4)
 	commandFileMapping: {

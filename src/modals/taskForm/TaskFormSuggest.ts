@@ -199,22 +199,7 @@ export class UserFieldSuggest extends AbstractInputSuggest<UserFieldSuggestion> 
 			}
 		};
 
-		// Use debouncing for performance in large vaults (same pattern as FileSuggestHelper)
-		const debounceMs = this.plugin.settings?.suggestionDebounceMs ?? 0;
-		if (!debounceMs) {
-			return run();
-		}
-
-		return new Promise<string[]>((resolve) => {
-			const anyPlugin = this.plugin as unknown as { __userFieldSuggestTimer?: number };
-			if (anyPlugin.__userFieldSuggestTimer) {
-				clearTimeout(anyPlugin.__userFieldSuggestTimer);
-			}
-			anyPlugin.__userFieldSuggestTimer = setTimeout(async () => {
-				const results = await run();
-				resolve(results);
-			}, debounceMs) as unknown as number;
-		});
+		return run();
 	}
 
 	public renderSuggestion(suggestion: UserFieldSuggestion, el: HTMLElement): void {
