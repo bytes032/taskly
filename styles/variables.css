@@ -1,0 +1,381 @@
+/* Material 3 Expressive Design System Variables (2025) */
+:root {
+    /* ================================================
+       SPACING SYSTEM - Optimized 4dp Grid Base for Compact Design
+       ================================================ */
+    
+    /* Material 3 Expressive spacing tokens - more compact for desktop */
+    --cs-spacing-xs: 2px;    /* 0.5 units - tighter for compact design */
+    --cs-spacing-sm: 4px;    /* 1 unit - reduced base grid */
+    --cs-spacing-md: 8px;    /* 2 units - more compact */
+    --cs-spacing-lg: 12px;   /* 3 units - reduced from 24px */
+    --cs-spacing-xl: 16px;   /* 4 units - more compact */
+    --cs-spacing-xxl: 24px;  /* 6 units - significantly reduced */
+    
+    /* ================================================
+       MATERIAL 3 EXPRESSIVE ELEVATION SYSTEM
+       ================================================ */
+    
+    /* Enhanced elevation shadows with more personality and depth */
+    --cs-elevation-0: none;
+    --cs-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.06);
+    --cs-elevation-2: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+    --cs-elevation-3: 0 3px 6px rgba(0, 0, 0, 0.12), 0 3px 9px rgba(0, 0, 0, 0.08);
+    --cs-elevation-4: 0 4px 8px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
+    --cs-elevation-5: 0 6px 12px rgba(0, 0, 0, 0.12), 0 6px 18px rgba(0, 0, 0, 0.08);
+    
+    /* Removed expressive shadow variants - rely on standard elevation system */
+    
+    /* Surface container colors for elevation */
+    --cs-surface-container-lowest: var(--background-primary);
+    --cs-surface-container-low: var(--background-primary-alt);
+    --cs-surface-container: var(--background-secondary);
+    --cs-surface-container-high: var(--background-secondary-alt);
+    --cs-surface-container-highest: var(--background-modifier-cover);
+    
+    /* ================================================
+       MATERIAL 3 EXPRESSIVE TYPOGRAPHY SCALE
+       ================================================ */
+    
+    /* Display - More expressive and compact for desktop use */
+    --cs-text-display-large: 2.75rem;   /* 44px - reduced from 56px */
+    --cs-text-display-medium: 2.25rem;  /* 36px - reduced from 45px */
+    --cs-text-display-small: 1.875rem;  /* 30px - reduced from 36px */
+    
+    /* Headlines - Optimized for desktop density */
+    --cs-text-headline-large: 1.75rem;    /* 28px - reduced from 32px */
+    --cs-text-headline-medium: 1.5rem;    /* 24px - reduced from 28px */
+    --cs-text-headline-small: 1.25rem;    /* 20px - reduced from 24px */
+    
+    /* Titles - Compact yet readable */
+    --cs-text-title-large: 1.125rem;   /* 18px - reduced from 22px */
+    --cs-text-title-medium: 0.875rem;  /* 14px - reduced from 16px */
+    --cs-text-title-small: 0.75rem;    /* 12px - reduced from 14px */
+    
+    /* Body - Optimized for readability and compactness */
+    --cs-text-body-large: 0.875rem;    /* 14px - reduced from 16px */
+    --cs-text-body-medium: 0.75rem;    /* 12px - reduced from 14px */
+    --cs-text-body-small: 0.6875rem;   /* 11px - slightly reduced */
+    
+    /* Labels - Compact component text */
+    --cs-text-label-large: 0.75rem;    /* 12px - reduced from 14px */
+    --cs-text-label-medium: 0.6875rem; /* 11px - slightly reduced */
+    --cs-text-label-small: 0.625rem;   /* 10px - more compact */
+    
+    /* Legacy typography for compatibility */
+    --cs-text-xs: var(--cs-text-label-small);
+    --cs-text-sm: var(--cs-text-label-medium);
+    --cs-text-base: var(--cs-text-body-medium);
+    --cs-text-md: var(--cs-text-body-large);
+    --cs-text-lg: var(--cs-text-title-medium);
+    --cs-text-xl: var(--cs-text-title-large);
+    --cs-text-2xl: var(--cs-text-headline-small);
+    
+    /* ================================================
+       EXPRESSIVE BORDER RADIUS SYSTEM
+       ================================================ */
+    
+    /* Material 3 Expressive corner radius tokens - more dynamic and personality-driven */
+    --cs-radius-xs: 2px;    /* Extra small - more subtle */
+    --cs-radius-sm: 6px;    /* Small - slightly more rounded */
+    --cs-radius-md: 10px;   /* Medium - more organic feel */
+    --cs-radius-lg: 14px;   /* Large - enhanced personality */
+    --cs-radius-xl: 20px;   /* Extra large - more expressive */
+    --cs-radius-xxl: 28px;  /* Extra extra large - bold expression */
+    --cs-radius-full: 50%;  /* Full/pill - unchanged */
+    
+    /* Removed expressive radius variations - keep consistent radius system */
+    
+    /* ================================================
+       COMPACT COMPONENT SIZING
+       ================================================ */
+    
+    /* Touch targets - Optimized for desktop with compact design */
+    --cs-touch-target: 36px;     /* Reduced from 48px for compactness */
+    --cs-touch-target-lg: 44px;  /* Reduced from 56px */
+    --cs-touch-target-dense: 28px;  /* More compact dense layouts */
+    
+    /* Button heights - More compact for desktop */
+    --cs-button-height-sm: 24px;  /* Reduced from 32px */
+    --cs-button-height-md: 32px;  /* Reduced from 40px */
+    --cs-button-height-lg: var(--cs-touch-target);
+    
+    /* Input heights - Compact but usable */
+    --cs-input-height-sm: 24px;   /* Reduced from 32px */
+    --cs-input-height-md: 32px;   /* Reduced from 40px */
+    --cs-input-height-lg: var(--cs-touch-target);
+    
+    /* Icon sizes - Proportionally adjusted */
+    --cs-icon-sm: 14px;   /* Reduced from 16px */
+    --cs-icon-md: 20px;   /* Reduced from 24px */
+    --cs-icon-lg: 28px;   /* Reduced from 32px */
+    
+    /* ================================================
+       EXPRESSIVE MOTION PHYSICS SYSTEM
+       ================================================ */
+    
+    /* Material 3 Expressive motion tokens - enhanced with spatial springs */
+    --cs-motion-duration-instant: 25ms;   /* Near-instant feedback */
+    --cs-motion-duration-short1: 75ms;    /* Very quick interactions */
+    --cs-motion-duration-short2: 120ms;   /* Quick interactions */
+    --cs-motion-duration-short3: 180ms;   /* Standard interactions */
+    --cs-motion-duration-short4: 240ms;   /* Slightly longer interactions */
+    --cs-motion-duration-medium1: 300ms;  /* Medium duration */
+    --cs-motion-duration-medium2: 360ms;  /* Medium-long duration */
+    --cs-motion-duration-medium3: 420ms;  /* Longer interactions */
+    --cs-motion-duration-medium4: 480ms;  /* Long interactions */
+    --cs-motion-duration-long1: 540ms;    /* Very long interactions */
+    --cs-motion-duration-long2: 600ms;    /* Extra long */
+    
+    /* Enhanced easing curves for more natural, physics-based motion */
+    --cs-motion-easing-linear: cubic-bezier(0, 0, 1, 1);
+    --cs-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+    --cs-motion-easing-standard-accelerate: cubic-bezier(0.3, 0, 1, 1);
+    --cs-motion-easing-standard-decelerate: cubic-bezier(0, 0, 0, 1);
+    --cs-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+    --cs-motion-easing-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+    --cs-motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+    
+    /* Simplified motion system - keep only essential easing curves */
+    --cs-motion-easing-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    
+    /* Simplified transition tokens */
+    --cs-transition-instant: var(--cs-motion-duration-instant) var(--cs-motion-easing-standard);
+    --cs-transition-fast: var(--cs-motion-duration-short2) var(--cs-motion-easing-standard);
+    --cs-transition-normal: var(--cs-motion-duration-short3) var(--cs-motion-easing-spring);
+    --cs-transition-slow: var(--cs-motion-duration-medium1) var(--cs-motion-easing-emphasized);
+    
+    /* ================================================
+       STATE SYSTEM
+       ================================================ */
+    
+    /* Opacity values for different states */
+    --cs-state-hover: 0.08;
+    --cs-state-focus: 0.12;
+    --cs-state-pressed: 0.16;
+    --cs-state-dragged: 0.16;
+    --cs-state-disabled: 0.38;
+    
+    /* ================================================
+       Z-INDEX SYSTEM
+       ================================================ */
+    
+    /* Layer hierarchy for proper stacking */
+    --cs-z-base: 0;
+    --cs-z-sticky: 100;
+    --cs-z-fixed: 200;
+    --cs-z-overlay: 300;
+    --cs-z-dropdown: 1000;
+    --cs-z-tooltip: 2000;
+    --cs-z-modal: 3000;
+    --cs-z-notification: 4000;
+    
+    /* Simplified Color System - Rely more on theme colors */
+    /* Only define colors when theme doesn't provide suitable alternatives */
+    
+    /* Blue scale for notes and information */
+    --cs-blue-300: var(--color-blue, #60a5fa);
+    --cs-blue-400: var(--color-blue, #3b82f6);
+    --cs-blue-500: var(--color-blue, #2563eb);
+    
+    /* Purple scale for special items */
+    --cs-purple-100: rgba(139, 92, 246, 0.1);  /* Light purple background for daily notes */
+    --cs-purple-300: var(--color-purple, #a78bfa);
+    --cs-purple-400: var(--color-purple, #8b5cf6);
+    --cs-purple-500: var(--color-purple, #7c3aed);
+    
+    /* Use theme's muted colors */
+    --cs-gray-100: rgba(107, 114, 128, 0.1);  /* Light gray background for archived tasks */
+    --cs-gray-300: var(--background-modifier-border);
+    --cs-gray-400: var(--background-modifier-border-hover);
+    --cs-gray-500: var(--text-muted);
+    --cs-gray-600: var(--text-faint);
+    
+    /* Red and green gradient colors for due dates and completed tasks */
+    --cs-red-100: rgba(239, 68, 68, 0.1);    /* Light red background for due tasks */
+    --cs-green-100: rgba(34, 197, 94, 0.1);  /* Light green background for completed tasks */
+    
+    /* Fixed semantic usage for UI elements (not user-customizable) */
+    /* Special item colors (daily notes, recurring) */
+    --cs-color-daily-note: var(--cs-purple-300);
+    --cs-color-recurring: var(--cs-purple-400);
+    
+    /* Archived/inactive content */
+    --cs-color-archived: var(--cs-gray-500);
+    
+    /* Note: Status colors are user-customizable via settings */
+    /* They are injected as CSS variables: --status-{value}-color */
+    /* Default fallbacks for when custom colors aren't loaded yet */
+    --cs-color-status-fallback: var(--text-muted);
+    
+    /* Shadow system */
+    --cs-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --cs-shadow-md: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+    --cs-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --cs-shadow-xl: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* ================================================
+   TASKLY PLUGIN SCOPED VARIABLES
+   ================================================ */
+
+.taskly-plugin {
+    /* ================================================
+       SCOPED THEME INTEGRATION
+       ================================================ */
+    
+    /* Base & Text Colors - Map to Obsidian theme variables */
+    --tn-bg-primary: var(--background-primary);
+    --tn-bg-secondary: var(--background-secondary);
+    --tn-bg-primary-alt: var(--background-primary-alt, var(--background-primary));
+    --tn-bg-secondary-alt: var(--background-secondary-alt, var(--background-secondary));
+    --tn-text-normal: var(--text-normal);
+    --tn-text-muted: var(--text-muted);
+    --tn-text-faint: var(--text-faint);
+    --tn-text-accent: var(--interactive-accent);
+
+    /* Borders & Dividers - Map to Obsidian theme variables */
+    --tn-border-color: var(--background-modifier-border);
+    --tn-border-color-hover: var(--background-modifier-border-hover);
+    --tn-border-color-focus: var(--background-modifier-border-focus);
+    --tn-border-color-interactive: var(--interactive-accent);
+
+    /* Interactive States - Map to Obsidian theme variables */
+    --tn-interactive-normal: var(--interactive-normal);
+    --tn-interactive-hover: color-mix(in srgb, var(--tn-interactive-accent) 8%, transparent);
+    --tn-interactive-accent: var(--interactive-accent);
+    --tn-interactive-accent-hover: var(--interactive-accent-hover);
+    --tn-interactive-success: var(--interactive-success);
+
+    /* Semantic Colors - Use Obsidian's color palette when available */
+    --tn-color-success: var(--color-green, #00aa00);
+    --tn-color-warning: var(--color-yellow, #ffa500);
+    --tn-color-error: var(--color-red, #ff0000);
+    --tn-color-info: var(--color-blue, #0066cc);
+    --tn-color-overdue: var(--color-red, #ff0000);
+
+    /* ================================================
+       SCOPED SPACING SYSTEM (inherit from design system)
+       ================================================ */
+    
+    --tn-spacing-xs: var(--cs-spacing-xs);
+    --tn-spacing-sm: var(--cs-spacing-sm);
+    --tn-spacing-md: var(--cs-spacing-md);
+    --tn-spacing-lg: var(--cs-spacing-lg);
+    --tn-spacing-xl: var(--cs-spacing-xl);
+    --tn-spacing-xxl: var(--cs-spacing-xxl);
+
+    /* ================================================
+       SCOPED TYPOGRAPHY SYSTEM (inherit from design system)
+       ================================================ */
+    
+    --tn-font-size-xs: var(--cs-text-label-small);
+    --tn-font-size-sm: var(--cs-text-label-medium);
+    --tn-font-size-md: var(--cs-text-body-medium);
+    --tn-font-size-lg: var(--cs-text-body-large);
+    --tn-font-size-xl: var(--cs-text-title-medium);
+    --tn-font-size-2xl: var(--cs-text-title-large);
+
+    /* Typography weights and styles */
+    --tn-font-weight-normal: 400;
+    --tn-font-weight-medium: 500;
+    --tn-font-weight-semibold: 600;
+    --tn-font-weight-bold: 700;
+
+    /* ================================================
+       SCOPED BORDERS & SHADOWS (inherit from design system)
+       ================================================ */
+    
+    --tn-radius-xs: var(--cs-radius-xs);
+    --tn-radius-sm: var(--cs-radius-sm);
+    --tn-radius-md: var(--cs-radius-md);
+    --tn-radius-lg: var(--cs-radius-lg);
+    --tn-radius-xl: var(--cs-radius-xl);
+    --tn-radius-full: var(--cs-radius-full);
+
+    --tn-shadow-light: var(--cs-elevation-1);
+    --tn-shadow-medium: var(--cs-elevation-2);
+    --tn-shadow-strong: var(--cs-elevation-3);
+    --tn-shadow-hover: var(--cs-elevation-4);
+
+    /* ================================================
+       SCOPED MOTION SYSTEM (inherit from design system)
+       ================================================ */
+    
+    --tn-transition-fast: var(--cs-transition-fast);
+    --tn-transition-normal: var(--cs-transition-normal);
+    --tn-transition-slow: var(--cs-transition-slow);
+
+    /* ================================================
+       SCOPED COMPONENT SIZING (inherit from design system)
+       ================================================ */
+    
+    --tn-button-height-sm: var(--cs-button-height-sm);
+    --tn-button-height-md: var(--cs-button-height-md);
+    --tn-button-height-lg: var(--cs-button-height-lg);
+    
+    --tn-input-height-sm: var(--cs-input-height-sm);
+    --tn-input-height-md: var(--cs-input-height-md);
+    --tn-input-height-lg: var(--cs-input-height-lg);
+
+    --tn-icon-sm: var(--cs-icon-sm);
+    --tn-icon-md: var(--cs-icon-md);
+    --tn-icon-lg: var(--cs-icon-lg);
+
+    /* ================================================
+       SCOPED Z-INDEX SYSTEM (inherit from design system)
+       ================================================ */
+    
+    --tn-z-base: var(--cs-z-base);
+    --tn-z-sticky: var(--cs-z-sticky);
+    --tn-z-dropdown: var(--cs-z-dropdown);
+    --tn-z-modal: var(--cs-z-modal);
+    --tn-z-tooltip: var(--cs-z-tooltip);
+    --tn-z-notification: var(--cs-z-notification);
+
+    /* ================================================
+       PLUGIN-SPECIFIC VARIABLES
+       ================================================ */
+    
+    /* Status colors are dynamically injected by StatusManager */
+    /* These are fallbacks for when dynamic colors aren't loaded yet */
+    --tn-color-status-fallback: var(--tn-text-muted);
+    
+    /* Special component colors */
+    --tn-color-archived: var(--cs-color-archived);
+    --tn-color-daily-note: var(--cs-color-daily-note);
+    --tn-color-recurring: var(--cs-color-recurring);
+
+    /* ================================================
+       POLISH DESIGN TOKENS
+       ================================================ */
+
+    /* Refined shadows - layered for depth */
+    --tn-shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --tn-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --tn-shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+    --tn-shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+
+    /* Focus ring - accessible but elegant */
+    --tn-focus-ring: 0 0 0 2px var(--background-primary), 0 0 0 4px var(--interactive-accent);
+
+    /* Timing functions - organic feel */
+    --tn-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --tn-ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --tn-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    /* Durations */
+    --tn-duration-instant: 100ms;
+    --tn-duration-fast: 150ms;
+    --tn-duration-normal: 250ms;
+    --tn-duration-slow: 400ms;
+
+}
+
+/* Dark theme shadow adjustments */
+.theme-dark .taskly-plugin {
+    --tn-shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --tn-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --tn-shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2);
+    --tn-shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3);
+}

@@ -1,0 +1,1140 @@
+/* ================================================
+   SETTINGS VIEW - MINIMAL CLEAN STRUCTURE
+   ================================================ */
+
+/* ================================================
+   SETTINGS HEADER
+   ================================================ */
+
+.taskly-plugin .settings-header {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: var(--tn-spacing-md);
+    margin-top: calc(-1 * var(--tn-spacing-sm));
+}
+
+.taskly-plugin .settings-header-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--tn-spacing-xs);
+    color: var(--text-accent);
+    text-decoration: none;
+    font-size: var(--font-ui-small);
+}
+
+.taskly-plugin .settings-header-link:hover {
+    text-decoration: underline;
+}
+
+.taskly-plugin .settings-header-link::after {
+    content: "↗";
+    font-size: 0.85em;
+}
+
+/* ================================================
+   TAB NAVIGATION
+   ================================================ */
+
+/* Tab Navigation Container */
+.taskly-plugin .settings-view__tab-nav {
+    display: flex;
+    gap: var(--tn-spacing-xs);
+    margin-bottom: var(--tn-spacing-lg);
+    border-bottom: 1px solid var(--tn-border-color);
+    padding-bottom: var(--tn-spacing-sm);
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.taskly-plugin .settings-view__tab-button {
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.taskly-plugin .settings-view__tab-button--active,
+.taskly-plugin .settings-view__tab-button.is-active {
+    background: var(--interactive-accent) !important;
+    color: var(--text-on-accent) !important;
+}
+
+/* ================================================
+   TAB CONTENT
+   ================================================ */
+
+/* Tab Contents Container */
+.taskly-plugin .settings-view__tab-contents {
+    position: relative;
+    min-height: 400px;
+}
+
+/* Tab Content Panel */
+.taskly-plugin .settings-view__tab-content {
+    display: none;
+}
+
+.taskly-plugin .settings-view__tab-content--active {
+    display: block;
+    animation: tn-settings-fade-in 0.2s ease-in-out;
+}
+
+@keyframes tn-settings-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================================================
+   TASKLY SETTINGS CARD SYSTEM - CLEAN MINIMAL BASE
+   ================================================ */
+
+/* Base Card */
+.taskly-settings__card {
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+    margin-bottom: 12px;
+    overflow: visible;
+}
+
+.taskly-settings__card:hover {
+    border-color: var(--interactive-accent);
+}
+
+/* Card Header */
+.taskly-settings__card-header {
+    padding: 12px 16px;
+    background: var(--background-secondary);
+    border-bottom: 1px solid var(--background-modifier-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.taskly-settings__card-header--with-drag-handle {
+    padding-left: 40px;
+}
+
+.taskly-settings__card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.taskly-settings__card-primary-text {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-normal);
+    margin-bottom: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.taskly-settings__card-secondary-text {
+    font-size: 12px !important;
+    color: var(--text-muted) !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.3;
+    display: block;
+    margin-top: 2px;
+}
+
+.taskly-settings__card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.taskly-settings__card-color-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 12px;
+    border: 2px solid var(--background-primary);
+    box-shadow: 0 0 0 1px var(--background-modifier-border);
+}
+
+/* Card Content */
+.taskly-settings__card-content {
+    padding: 16px;
+}
+
+.taskly-settings__card-config-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.taskly-settings__card-config-row:last-child {
+    margin-bottom: 0;
+}
+
+.taskly-settings__card-config-label {
+    min-width: 80px;
+    font-weight: 500;
+    color: var(--text-normal);
+    font-size: 13px;
+    margin-right: 12px;
+}
+
+/* Card Inputs */
+.taskly-settings__card-input {
+    padding: 8px 12px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background: var(--background-modifier-form-field);
+    color: var(--text-normal);
+    font-size: 13px;
+    line-height: 1.4;
+    min-height: 32px;
+}
+
+/* Select dropdowns need extra styling */
+.taskly-settings__card-input[type="select"],
+select.taskly-settings__card-input {
+    padding: 6px 12px;
+    line-height: 1.5;
+    min-height: 34px;
+}
+
+.taskly-settings__card-input[type="text"],
+.taskly-settings__card-input[type="url"],
+.taskly-settings__card-input[type="email"] {
+    flex: 0 1 auto;
+    min-width: 150px;
+}
+
+.taskly-settings__card-input[type="checkbox"] {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+    align-self: center !important;
+}
+
+.taskly-settings__card-input[type="color"] {
+    width: 40px;
+    height: 32px;
+    padding: 2px;
+}
+
+.taskly-settings__card-input[type="number"] {
+    width: 80px;
+}
+
+.taskly-settings__card-input:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+}
+
+/* Card Actions */
+.taskly-settings__card-actions {
+    padding: 12px 16px;
+    background: var(--background-modifier-form-field);
+    border-top: 1px solid var(--background-modifier-border);
+    display: flex;
+    gap: 8px;
+}
+
+.taskly-settings__card-action-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    background: var(--background-primary);
+    color: var(--text-normal);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: var(--cursor);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.taskly-settings__card-action-btn:hover {
+    background: var(--background-modifier-hover);
+}
+
+.taskly-settings__card-action-btn--primary {
+    background: none;
+    color: var(--text-on-accent);
+    border-color: var(--interactive-accent);
+}
+
+.taskly-settings__card-action-btn--primary:hover {
+    background: var(--interactive-accent-hover);
+}
+
+.taskly-settings__card-action-btn--delete {
+    background: var(--color-red);
+    color: white;
+    border-color: var(--color-red);
+}
+
+/* Header Actions */
+.taskly-settings__card-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.taskly-settings__card-header-btn {
+    width: 20px;
+    height: 20px;
+    border: none !important;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: var(--cursor);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none !important;
+    outline: none !important;
+    padding: 0;
+}
+
+.taskly-settings__card-header-btn:focus {
+    box-shadow: none !important;
+    outline: none !important;
+    border: none !important;
+}
+
+.taskly-settings__card-header-btn:hover {
+    background: var(--background-modifier-hover);
+    color: var(--text-normal);
+}
+
+.taskly-settings__card-header-btn--delete:hover {
+    background: var(--color-red);
+    color: white;
+}
+
+/* Status Badges */
+.taskly-settings__card-status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--background-modifier-border);
+    color: var(--text-muted);
+}
+
+.taskly-settings__card-status-badge--active {
+    background: var(--color-green);
+    color: white;
+}
+
+.taskly-settings__card-status-badge--inactive {
+    background: var(--color-red);
+    color: white;
+}
+
+.taskly-settings__card-info-badge {
+    padding: 3px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 500;
+    background: var(--background-modifier-border);
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+/* Drag Handle */
+.taskly-settings__card-drag-handle {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 16px;
+    cursor: grab;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    opacity: 0.6;
+}
+
+.taskly-settings__card-drag-handle:hover {
+    opacity: 1;
+    background: var(--background-modifier-hover);
+}
+
+.taskly-settings__card-drag-handle:active {
+    cursor: grabbing;
+}
+
+/* Drag States */
+.taskly-settings__card--draggable {
+    cursor: grab;
+}
+
+.taskly-settings__card--dragging {
+    opacity: 0.7;
+    transform: rotate(1deg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: var(--interactive-accent);
+}
+
+.taskly-settings__card--drag-over-top {
+    border-top: 2px solid var(--interactive-accent);
+}
+
+.taskly-settings__card--drag-over-bottom {
+    border-bottom: 2px solid var(--interactive-accent);
+}
+
+/* Empty state for card containers */
+.taskly-plugin .settings-view .taskly-settings__empty-state {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 2rem;
+    background: var(--background-modifier-form-field);
+    border: 1px dashed var(--background-modifier-border);
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.taskly-plugin .settings-view .taskly-settings__empty-icon {
+    display: flex;
+    align-items: center;
+    opacity: 0.6;
+}
+
+.taskly-plugin .settings-view .taskly-settings__empty-text {
+    flex: 1;
+}
+
+/* ================================================
+   COLLAPSIBLE CARD FUNCTIONALITY
+   ================================================ */
+
+/* Collapsible card support */
+.taskly-settings__card--collapsible {
+    transition: all 0.2s ease;
+}
+
+.taskly-settings__card--collapsible .taskly-settings__card-content,
+.taskly-settings__card--collapsible .taskly-settings__card-actions {
+    transition: all 0.2s ease;
+    overflow: hidden;
+}
+
+/* Collapsed state - hide content and actions */
+.taskly-settings__card--collapsed .taskly-settings__card-content {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    border: none;
+}
+
+.taskly-settings__card--collapsed .taskly-settings__card-actions {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    border: none;
+}
+
+/* Collapse button styling */
+.taskly-settings__card-collapse-btn {
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.taskly-settings__card-collapse-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Visual indicator for collapsed cards */
+.taskly-settings__card--collapsed {
+    opacity: 0.9;
+}
+
+/* Clickable header styling */
+.taskly-settings__card-header--clickable {
+    cursor: var(--cursor);
+    user-select: none;
+}
+
+.taskly-settings__card-header--clickable:hover {
+    background: var(--background-modifier-hover);
+}
+
+/* ================================================
+   WEBHOOK MODAL STYLES
+   ================================================ */
+
+.taskly-webhook-modal {
+    max-width: 800px;
+    padding: var(--tn-spacing-lg);
+}
+
+.taskly-webhook-modal-header {
+    display: flex;
+    align-items: center;
+    gap: var(--tn-spacing-md);
+    margin-bottom: var(--tn-spacing-lg);
+    padding-bottom: var(--tn-spacing-md);
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.taskly-webhook-modal-icon {
+    color: var(--interactive-accent);
+    font-size: 1.5rem;
+}
+
+.taskly-webhook-modal-title {
+    margin: 0;
+    color: var(--text-normal);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.taskly-webhook-modal-section {
+    margin-bottom: var(--tn-spacing-xl);
+}
+
+.taskly-webhook-modal-subsection-header {
+    display: flex;
+    align-items: center;
+    gap: var(--tn-spacing-sm);
+    margin-bottom: var(--tn-spacing-md);
+}
+
+.taskly-webhook-modal-subsection-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-normal);
+}
+
+.taskly-webhook-events-list .setting-item {
+    padding: var(--tn-spacing-sm) 0;
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.taskly-webhook-events-list .setting-item:last-child {
+    border-bottom: none;
+}
+
+.taskly-webhook-transform-help {
+    margin-top: var(--tn-spacing-md);
+    padding: var(--tn-spacing-md);
+    background: var(--background-secondary);
+    border-radius: var(--tn-radius-sm);
+    border-left: 3px solid var(--interactive-accent);
+}
+
+.taskly-webhook-help-header {
+    display: flex;
+    align-items: center;
+    gap: var(--tn-spacing-xs);
+    margin-bottom: var(--tn-spacing-sm);
+    font-weight: 500;
+    color: var(--text-normal);
+}
+
+.taskly-webhook-help-list {
+    margin: var(--tn-spacing-sm) 0;
+    padding-left: var(--tn-spacing-lg);
+    color: var(--text-muted);
+    font-size: var(--tn-font-size-sm);
+}
+
+.taskly-webhook-help-list li {
+    margin-bottom: var(--tn-spacing-xs);
+}
+
+.taskly-webhook-help-example {
+    margin-top: var(--tn-spacing-sm);
+    font-size: var(--tn-font-size-sm);
+    color: var(--text-muted);
+}
+
+.taskly-webhook-modal-buttons {
+    display: flex;
+    gap: var(--tn-spacing-sm);
+    justify-content: flex-end;
+    margin-top: var(--tn-spacing-xl);
+    padding-top: var(--tn-spacing-md);
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+.taskly-webhook-modal-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--tn-spacing-xs);
+    padding: var(--tn-spacing-sm) var(--tn-spacing-lg);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--tn-radius-sm);
+    background: var(--background-primary);
+    color: var(--text-normal);
+    font-size: var(--tn-font-size-sm);
+    font-weight: 500;
+    cursor: var(--cursor);
+    transition: all 0.2s ease;
+}
+
+.taskly-webhook-modal-btn:hover {
+    background: var(--background-modifier-hover);
+    border-color: var(--interactive-accent);
+}
+
+.taskly-webhook-modal-btn.save {
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border-color: var(--interactive-accent);
+}
+
+.taskly-webhook-modal-btn.save:hover {
+    background: var(--interactive-accent-hover);
+    border-color: var(--interactive-accent-hover);
+}
+
+.taskly-webhook-modal-btn.cancel {
+    background: transparent;
+}
+
+.taskly-webhook-modal-btn.cancel:hover {
+    background: var(--background-modifier-hover);
+}
+
+.taskly-webhook-modal-btn-icon {
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+/* Webhook Secret Notice */
+.taskly-webhook-secret-notice {
+    text-align: center;
+    padding: var(--tn-spacing-xl);
+}
+
+.taskly-webhook-secret-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--tn-spacing-sm);
+    margin-bottom: var(--tn-spacing-lg);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--interactive-accent);
+}
+
+.taskly-webhook-secret-content {
+    margin-bottom: var(--tn-spacing-lg);
+}
+
+.taskly-webhook-secret-content p {
+    margin-bottom: var(--tn-spacing-md);
+    color: var(--text-normal);
+}
+
+.taskly-webhook-secret-code {
+    display: block;
+    background: var(--background-modifier-form-field);
+    padding: var(--tn-spacing-md);
+    border-radius: var(--tn-radius-sm);
+    font-family: var(--font-monospace);
+    font-size: var(--tn-font-size-sm);
+    word-break: break-all;
+    user-select: all;
+    border: 1px solid var(--background-modifier-border);
+    margin: var(--tn-spacing-md) 0;
+    cursor: var(--cursor);
+}
+
+.taskly-webhook-secret-code:hover {
+    background: var(--background-modifier-hover);
+    border-color: var(--interactive-accent);
+}
+
+/* ================================================
+   HELPER TEXT & WARNING SECTIONS
+   ================================================ */
+
+/* Help sections with lists */
+.taskly-settings__help-section {
+    background: var(--background-secondary);
+    border-radius: 6px;
+    padding: 16px;
+    margin: 12px 0;
+}
+
+.taskly-settings__help-section h4 {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-normal);
+}
+
+.taskly-settings__help-section ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.taskly-settings__help-section li {
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.taskly-settings__help-note {
+    margin: 12px 0 0 0;
+    padding: 12px;
+    background: var(--background-modifier-form-field);
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border: 1px solid var(--background-modifier-border);
+}
+
+/* Warning sections */
+.taskly-settings__warning {
+    background: color-mix(in srgb, var(--color-red) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-red) 30%, transparent);
+    border-radius: 6px;
+    padding: 16px;
+    margin: 12px 0;
+    font-size: 13px;
+    color: var(--text-normal);
+    line-height: 1.4;
+}
+
+.taskly-settings__warning strong {
+    color: var(--color-red);
+}
+
+/* ================================================
+   FIELD MAPPING TABLE - CARD STYLE
+   ================================================ */
+
+.taskly-settings__table {
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 16px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.taskly-settings__table-header {
+    background: var(--background-secondary);
+    color: var(--text-normal);
+    font-weight: 600;
+    font-size: 13px;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--background-modifier-border);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.taskly-settings__table-header:first-child {
+    min-width: 140px;
+    width: 35%;
+}
+
+.taskly-settings__table-header:last-child {
+    width: 65%;
+}
+
+.taskly-settings__table-row {
+    transition: background-color 0.2s ease;
+}
+
+.taskly-settings__table-row:nth-child(even) {
+    background: var(--background-modifier-form-field);
+}
+
+.taskly-settings__table-row:hover {
+    background: var(--background-modifier-hover);
+}
+
+.taskly-settings__table-cell {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--background-modifier-border);
+    vertical-align: middle;
+    font-size: 13px;
+}
+
+.taskly-settings__table-cell:first-child {
+    font-weight: 500;
+    color: var(--text-normal);
+    background: var(--background-modifier-form-field);
+}
+
+.taskly-settings__table-cell:last-child {
+    background: inherit;
+}
+
+/* Remove border from last row */
+.taskly-settings__table-row:last-child .taskly-settings__table-cell {
+    border-bottom: none;
+}
+
+/* Field mapping input styling */
+.field-mapping-input {
+    width: 100%;
+} 
+
+.field-mapping-input:hover {
+    border-color: var(--interactive-hover);
+}
+
+.field-mapping-input::placeholder {
+    color: var(--text-faint);
+    font-style: italic;
+    opacity: 0.7;
+}
+
+/* ================================================
+   DEFAULT VISIBLE PROPERTIES STYLING
+   ================================================ */
+
+.taskly-settings__properties-container {
+    margin: 16px 0;
+}
+
+.taskly-settings__property-group {
+    margin-bottom: 20px;
+}
+
+.taskly-settings__property-group-header {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.taskly-settings__property-toggles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px;
+}
+
+.taskly-settings__property-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+}
+
+.taskly-settings__property-checkbox {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: var(--cursor);
+}
+
+.taskly-settings__property-label {
+    font-size: 13px;
+    color: var(--text-normal);
+    cursor: var(--cursor);
+    flex: 1;
+    line-height: 1.3;
+}
+
+.taskly-settings__property-label:hover {
+    color: var(--text-accent);
+}
+
+/* ================================================
+   COLLAPSIBLE SECTIONS
+   ================================================ */
+
+.taskly-settings__collapsible-header {
+    cursor: var(--cursor);
+    padding: 8px 12px;
+    margin: -8px -12px 12px -12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    user-select: none;
+}
+
+.taskly-settings__collapsible-header:hover {
+    background: var(--background-modifier-hover);
+}
+
+.taskly-settings__collapsible-header-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.taskly-settings__collapsible-icon {
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: transform 0.2s ease;
+    font-family: monospace;
+    line-height: 1;
+}
+
+.taskly-settings__collapsible-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-normal);
+    margin: 0;
+}
+
+.taskly-settings__collapsible-content {
+    transition: all 0.2s ease;
+}
+
+/* Nested collapsible sections (e.g., filter settings within custom fields) */
+.taskly-settings__collapsible-section {
+    margin-top: 12px;
+}
+
+.taskly-settings__collapsible-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: var(--cursor);
+    padding: 8px 12px;
+    margin: 0 -12px 12px -12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    user-select: none;
+}
+
+.taskly-settings__collapsible-section-header:hover {
+    background: var(--background-modifier-hover);
+}
+
+.taskly-settings__collapsible-section-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.taskly-settings__collapsible-section-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.taskly-settings__filter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.taskly-settings__filter-badge svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+}
+
+.taskly-settings__collapsible-section-chevron {
+    display: flex;
+    align-items: center;
+    color: var(--text-muted);
+    transition: transform 0.2s ease;
+}
+
+.taskly-settings__collapsible-section-chevron svg {
+    width: 16px;
+    height: 16px;
+}
+
+.taskly-settings__collapsible-section-content {
+    max-height: none;
+    opacity: 1;
+    overflow: visible;
+}
+
+/* Collapsed state */
+.taskly-settings__collapsible-section--collapsed .taskly-settings__collapsible-section-content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.taskly-settings__collapsible-section--collapsed .taskly-settings__collapsible-section-chevron {
+    transform: rotate(-90deg);
+}
+
+/* ================================================
+   ICON INPUT WITH SUGGESTIONS
+   ================================================ */
+
+/* Icon input container with preview */
+.taskly-plugin .icon-input-container {
+    display: flex;
+    align-items: center;
+    gap: var(--tn-spacing-xs);
+    flex: 1;
+}
+
+.taskly-plugin .icon-input-preview {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--tn-radius-sm);
+    background: var(--background-modifier-hover);
+    flex-shrink: 0;
+}
+
+.taskly-plugin .icon-input-preview svg {
+    width: 16px;
+    height: 16px;
+    color: var(--text-normal);
+}
+
+.taskly-plugin .icon-input {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Icon suggestion dropdown items */
+.suggestion-item.icon-suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-2);
+    padding: var(--size-4-1) var(--size-4-2);
+}
+
+.icon-suggestion-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.icon-suggestion-preview svg {
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+}
+
+.icon-suggestion-text {
+    color: var(--text-normal);
+    font-size: var(--font-ui-small);
+}
+
+/* Highlight matched icon in suggestions */
+.suggestion-item.icon-suggestion-item.is-selected .icon-suggestion-preview svg {
+    color: var(--text-on-accent);
+}
+
+.suggestion-item.icon-suggestion-item.is-selected .icon-suggestion-text {
+    color: var(--text-on-accent);
+}
+
+/* Webhook events display */
+.taskly-webhook-events {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    min-height: 1.5rem;
+    line-height: 1.5rem;
+}
+
+.taskly-webhook-events--empty {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Webhook transform file display */
+.taskly-transform-file {
+    font-family: var(--font-monospace);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5rem;
+    padding: 0.25rem 0.5rem;
+    background: var(--background-modifier-form-field);
+    border-radius: 4px;
+    border: 1px solid var(--background-modifier-border);
+}
+
+.taskly-transform-file--empty {
+    font-family: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Auto export status container */
+.taskly-auto-export-status {
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--background-secondary);
+    border-radius: 4px;
+}
+
+.taskly-auto-export-status__title {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.taskly-auto-export-status__content {
+    font-size: 0.9em;
+    opacity: 0.8;
+    white-space: pre-line;
+}
+
+.taskly-auto-export-status__error {
+    font-weight: 500;
+    color: var(--text-warning);
+}
+
+/* ================================================
+   ACCESSIBILITY & REDUCED MOTION
+   ================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .taskly-plugin .settings-view__tab-content--active {
+        animation: none;
+    }
+
+    .taskly-settings__card,
+    .taskly-settings__card-drag-handle {
+        transition: none;
+    }
+}

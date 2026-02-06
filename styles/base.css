@@ -1,0 +1,67 @@
+/* Reduced motion support - scope to Taskly components only */
+@media (prefers-reduced-motion: reduce) {
+    .taskly-container *,
+    .taskly-card *,
+    .taskly-button * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Button click feedback - scope to Taskly buttons only */
+.taskly-container button:active:not(:disabled),
+.taskly-button:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+/* Performance optimization animations */
+@keyframes tn-task-flash {
+    0% { 
+        background-color: var(--interactive-accent-hover); 
+        transform: scale(1.02);
+    }
+    100% { 
+        background-color: transparent; 
+        transform: scale(1);
+    }
+}
+
+@keyframes tn-task-pulse {
+    0%, 100% { 
+        opacity: 1; 
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.8; 
+        transform: scale(1.01);
+    }
+}
+
+@keyframes tn-task-fade-in {
+    0% { 
+        opacity: 0; 
+        transform: translateY(-4px);
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+/* Task update animations */
+.taskly-plugin .task-flash {
+    animation: tn-task-flash 1500ms ease-out;
+}
+
+.taskly-plugin .task-pulse {
+    animation: tn-task-pulse 1000ms ease-in-out;
+}
+
+.taskly-plugin .task-fade-in {
+    animation: tn-task-fade-in 300ms ease-out;
+}
+
+
+
+

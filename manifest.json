@@ -1,0 +1,10 @@
+{
+	"id": "taskly",
+	"name": "Taskly",
+	"minAppVersion": "1.10.1",
+	"description": "Taskly: note-based task management.",
+	"author": "Todor",
+	"authorUrl": "https://github.com/bytes032",
+	"isDesktopOnly": false,
+	"version": "1.0.0"
+}
