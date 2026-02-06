@@ -3,7 +3,6 @@ import {
 	EVENT_TASK_UPDATED,
 	TaskCreationData,
 	TaskInfo,
-	IWebhookNotifier,
 } from "../types";
 import { AutoArchiveService } from "./AutoArchiveService";
 import {
@@ -30,21 +29,11 @@ import TasklyPlugin from "../main";
 
 import { formatString } from "../utils/stringFormat";
 export class TaskService {
-	private webhookNotifier?: IWebhookNotifier;
 	private autoArchiveService?: AutoArchiveService;
 	private recurringTaskService: RecurringTaskService;
 
 	constructor(private plugin: TasklyPlugin) {
 		this.recurringTaskService = new RecurringTaskService(plugin);
-	}
-
-	/**
-	 * Set webhook notifier for triggering webhook events
-	 * Called after HTTPAPIService is initialized to avoid circular dependencies
-	 */
-	setWebhookNotifier(notifier: IWebhookNotifier): void {
-		this.webhookNotifier = notifier;
-		this.recurringTaskService.setWebhookNotifier(notifier);
 	}
 
 	/**
@@ -271,15 +260,6 @@ export class TaskService {
 				path: file.path,
 				updatedTask: taskInfo,
 			});
-
-			// Trigger webhook for task creation
-			if (this.webhookNotifier) {
-				try {
-					await this.webhookNotifier.triggerWebhook("task.created", { task: taskInfo });
-				} catch (error) {
-					console.warn("Failed to trigger webhook for task creation:", error);
-				}
-			}
 
 			return { file, taskInfo };
 		} catch (error) {
@@ -554,31 +534,6 @@ export class TaskService {
 				// Event emission errors shouldn't break the operation
 			}
 
-			// Trigger webhooks for property updates
-			if (this.webhookNotifier) {
-				try {
-					// Check if this was a completion
-					const wasCompleted = this.plugin.statusManager.isCompletedStatus(task.status);
-					const isCompleted =
-						property === "status" && this.plugin.statusManager.isCompletedStatus(value);
-
-					if (property === "status" && !wasCompleted && isCompleted) {
-						// Task was completed
-						await this.webhookNotifier.triggerWebhook("task.completed", {
-							task: updatedTask as TaskInfo,
-						});
-					} else {
-						// Regular property update
-						await this.webhookNotifier.triggerWebhook("task.updated", {
-							task: updatedTask as TaskInfo,
-							previous: task,
-						});
-					}
-				} catch (error) {
-					console.warn("Failed to trigger webhook for property update:", error);
-				}
-			}
-
 			// If task was archived and status moves back to a non-completed state, unarchive it.
 			if (
 				property === "status" &&
@@ -795,22 +750,6 @@ export class TaskService {
 			updatedTask: updatedTask,
 		});
 
-		// Trigger webhook for archive/unarchive
-		if (this.webhookNotifier) {
-			try {
-				if (updatedTask.archived) {
-					await this.webhookNotifier.triggerWebhook("task.archived", {
-						task: updatedTask,
-					});
-				} else {
-					await this.webhookNotifier.triggerWebhook("task.unarchived", {
-						task: updatedTask,
-					});
-				}
-			} catch (error) {
-				console.warn("Failed to trigger webhook for task archive/unarchive:", error);
-			}
-		}
 
 		// Step 5: Return authoritative data
 		return updatedTask;
@@ -1088,33 +1027,6 @@ export class TaskService {
 				// Event emission errors shouldn't break the operation
 			}
 
-			// Trigger webhooks for task update/completion
-			if (this.webhookNotifier) {
-				try {
-					// Check if this was a completion
-					const wasCompleted = this.plugin.statusManager.isCompletedStatus(
-						originalTask.status
-					);
-					const isCompleted = this.plugin.statusManager.isCompletedStatus(
-						updatedTask.status
-					);
-
-					if (!wasCompleted && isCompleted) {
-						// Task was completed
-						await this.webhookNotifier.triggerWebhook("task.completed", {
-							task: updatedTask,
-						});
-					} else {
-						// Regular update
-						await this.webhookNotifier.triggerWebhook("task.updated", {
-							task: updatedTask,
-							previous: originalTask,
-						});
-					}
-				} catch (error) {
-					console.warn("Failed to trigger webhook for task update:", error);
-				}
-			}
 
 			// If task was archived and status moves back to a non-completed state, unarchive it.
 			if (
@@ -1193,14 +1105,6 @@ export class TaskService {
 				deletedTask: task,
 			});
 
-			// Trigger webhook for task deletion
-			if (this.webhookNotifier) {
-				try {
-					await this.webhookNotifier.triggerWebhook("task.deleted", { task });
-				} catch (error) {
-					console.warn("Failed to trigger webhook for task deletion:", error);
-				}
-			}
 		} catch (error) {
 			const errorMessage = error instanceof Error ? error.message : String(error);
 			// eslint-disable-next-line no-console

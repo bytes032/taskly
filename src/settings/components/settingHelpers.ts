@@ -38,14 +38,6 @@ export interface NumberSettingOptions {
 	debounceMs?: number;
 }
 
-export interface ButtonSettingOptions {
-	name: string;
-	desc: string;
-	buttonText: string;
-	onClick: () => void | Promise<void>;
-	buttonClass?: string;
-}
-
 export interface SettingGroupOptions {
 	heading: string;
 	description?: string;
@@ -148,16 +140,6 @@ export function configureToggleSetting(setting: Setting, options: ToggleSettingO
 }
 
 /**
- * Helper for creating standard toggle settings
- */
-export function createToggleSetting(
-	container: HTMLElement,
-	options: ToggleSettingOptions
-): Setting {
-	return configureToggleSetting(new Setting(container), options);
-}
-
-/**
  * Helper for configuring a text input setting (works with SettingGroup.addSetting)
  */
 export function configureTextSetting(setting: Setting, options: TextSettingOptions): Setting {
@@ -191,13 +173,6 @@ export function configureTextSetting(setting: Setting, options: TextSettingOptio
 }
 
 /**
- * Helper for creating standard text input settings
- */
-export function createTextSetting(container: HTMLElement, options: TextSettingOptions): Setting {
-	return configureTextSetting(new Setting(container), options);
-}
-
-/**
  * Helper for configuring a dropdown setting (works with SettingGroup.addSetting)
  */
 export function configureDropdownSetting(setting: Setting, options: DropdownSettingOptions): Setting {
@@ -217,16 +192,6 @@ export function configureDropdownSetting(setting: Setting, options: DropdownSett
 
 			return dropdown;
 		});
-}
-
-/**
- * Helper for creating standard dropdown settings
- */
-export function createDropdownSetting(
-	container: HTMLElement,
-	options: DropdownSettingOptions
-): Setting {
-	return configureDropdownSetting(new Setting(container), options);
 }
 
 /**
@@ -276,46 +241,6 @@ export function configureNumberSetting(setting: Setting, options: NumberSettingO
 }
 
 /**
- * Helper for creating standard number input settings
- */
-export function createNumberSetting(
-	container: HTMLElement,
-	options: NumberSettingOptions
-): Setting {
-	return configureNumberSetting(new Setting(container), options);
-}
-
-/**
- * Helper for configuring a button setting (works with SettingGroup.addSetting)
- */
-export function configureButtonSetting(setting: Setting, options: ButtonSettingOptions): Setting {
-	return setting
-		.setName(options.name)
-		.setDesc(options.desc)
-		.addButton((button) => {
-			button.setButtonText(options.buttonText).onClick(options.onClick);
-
-			if (options.buttonClass) {
-				button.buttonEl.addClass(options.buttonClass);
-			} else {
-				button.buttonEl.addClasses(["tn-btn", "tn-btn--ghost"]);
-			}
-
-			return button;
-		});
-}
-
-/**
- * Helper for creating standard button settings
- */
-export function createButtonSetting(
-	container: HTMLElement,
-	options: ButtonSettingOptions
-): Setting {
-	return configureButtonSetting(new Setting(container), options);
-}
-
-/**
  * Helper for creating section headers
  */
 export function createSectionHeader(container: HTMLElement, title: string): Setting {
@@ -330,39 +255,6 @@ export function createHelpText(container: HTMLElement, text: string): HTMLElemen
 		text,
 		cls: "settings-view__help-note",
 	});
-}
-
-/**
- * Helper for creating validation notes
- */
-export function createValidationNote(container: HTMLElement, text: string): HTMLElement {
-	return container.createEl("p", {
-		text,
-		cls: "settings-validation-note",
-	});
-}
-
-/**
- * Helper for creating list headers with consistent styling
- */
-export function createListHeaders(
-	container: HTMLElement,
-	headers: string[],
-	className = ""
-): HTMLElement {
-	const headersRow = container.createDiv(`settings-view__list-headers ${className}`.trim());
-
-	headers.forEach((header) => {
-		headersRow.createEl("span", {
-			text: header,
-			cls: "settings-view__column-header",
-		});
-	});
-
-	// Add spacer for action buttons
-	headersRow.createDiv("settings-view__header-spacer");
-
-	return headersRow;
 }
 
 /**

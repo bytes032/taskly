@@ -1,26 +1,21 @@
 /* eslint-disable no-console */
 import { createServer, IncomingMessage, ServerResponse, Server } from "http";
 import { parse } from "url";
-import { IWebhookNotifier } from "../types";
 import { TaskService } from "./TaskService";
 import { FilterService } from "./FilterService";
 import { TaskManager } from "../utils/TaskManager";
 import { NaturalLanguageParser } from "./NaturalLanguageParser";
-import { StatusManager } from "./StatusManager";
 import TasklyPlugin from "../main";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { APIRouter } from "../api/APIRouter";
 import { TasksController } from "../api/TasksController";
 import { SystemController } from "../api/SystemController";
-import { WebhookController } from "../api/WebhookController";
-
-export class HTTPAPIService implements IWebhookNotifier {
+export class HTTPAPIService {
 	private server?: Server;
 	private plugin: TasklyPlugin;
 	private router: APIRouter;
 	private tasksController: TasksController;
 	private systemController: SystemController;
-	private webhookController: WebhookController;
 
 	constructor(
 		plugin: TasklyPlugin,
@@ -32,23 +27,18 @@ export class HTTPAPIService implements IWebhookNotifier {
 
 		// Initialize dependencies
 		const nlParser = NaturalLanguageParser.fromPlugin(plugin);
-		const statusManager = new StatusManager(plugin.settings.customStatuses);
 
 		// Initialize controllers
-		this.webhookController = new WebhookController(plugin);
 		this.tasksController = new TasksController(
 			plugin,
 			taskService,
 			filterService,
-			cacheManager,
-			statusManager,
-			this.webhookController
+			cacheManager
 		);
 		this.systemController = new SystemController(
 			plugin,
 			taskService,
-			nlParser,
-			this.webhookController
+			nlParser
 		);
 
 		// Initialize router and register routes
@@ -60,7 +50,6 @@ export class HTTPAPIService implements IWebhookNotifier {
 		// Register all controllers using decorators
 		this.router.registerController(this.tasksController);
 		this.router.registerController(this.systemController);
-		this.router.registerController(this.webhookController);
 	}
 
 	private async handleCORSPreflight(req: IncomingMessage, res: ServerResponse): Promise<void> {
@@ -137,11 +126,6 @@ export class HTTPAPIService implements IWebhookNotifier {
 			console.error("API Error:", error);
 			this.sendResponse(res, 500, this.errorResponse("Internal server error"));
 		}
-	}
-
-	// Webhook interface implementation - delegate to WebhookController
-	async triggerWebhook(event: any, data: any): Promise<void> {
-		await this.webhookController.triggerWebhook(event, data);
 	}
 
 	async start(): Promise<void> {

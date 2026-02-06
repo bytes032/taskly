@@ -485,54 +485,6 @@ export interface ViewPreferences {
 	[viewType: string]: any; // View-specific preferences
 }
 
-// Webhook types
-export type WebhookEvent =
-	| "task.created"
-	| "task.updated"
-	| "task.deleted"
-	| "task.completed"
-	| "task.archived"
-	| "task.unarchived"
-	| "recurring.instance.completed"
-	| "recurring.instance.skipped"
-	| "reminder.triggered";
-
-export interface WebhookConfig {
-	id: string;
-	url: string;
-	events: WebhookEvent[];
-	secret: string;
-	active: boolean;
-	createdAt: string;
-	lastTriggered?: string;
-	failureCount: number;
-	successCount: number;
-	transformFile?: string; // Optional path to transformation file (.js or .json)
-	corsHeaders?: boolean; // Whether to include custom headers (false for Discord, Slack, etc.)
-}
-
-export interface WebhookPayload {
-	event: WebhookEvent;
-	timestamp: string;
-	vault: {
-		name: string;
-		path?: string;
-	};
-	data: any;
-}
-
-export interface WebhookDelivery {
-	id: string;
-	webhookId: string;
-	event: WebhookEvent;
-	payload: WebhookPayload;
-	status: "pending" | "success" | "failed";
-	attempts: number;
-	lastAttempt?: string;
-	responseStatus?: number;
-	error?: string;
-}
-
 // Auto-archive types
 export interface PendingAutoArchive {
 	taskPath: string;
@@ -541,7 +493,3 @@ export interface PendingAutoArchive {
 	statusValue: string;
 }
 
-// Webhook notification interface for loose coupling
-export interface IWebhookNotifier {
-	triggerWebhook(event: WebhookEvent, data: any): Promise<void>;
-}

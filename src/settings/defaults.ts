@@ -124,8 +124,6 @@ export const DEFAULT_SETTINGS: TasklySettings = {
 	enableAPI: false,
 	apiPort: 8080,
 	apiAuthToken: "",
-	// Webhook defaults
-	webhooks: [],
 	// User Fields defaults (multiple)
 	userFields: [],
 	// Default visible properties for task cards

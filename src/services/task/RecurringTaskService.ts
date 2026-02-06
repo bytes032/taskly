@@ -1,6 +1,6 @@
 import { TFile } from "obsidian";
 import TasklyPlugin from "../../main";
-import { TaskInfo, IWebhookNotifier } from "../../types";
+import { TaskInfo } from "../../types";
 import {
 	addDTSTARTToRecurrenceRule,
 	updateDTSTARTInRecurrenceRule,
@@ -15,13 +15,7 @@ import {
 import { EVENT_TASK_UPDATED } from "../../types";
 
 export class RecurringTaskService {
-	private webhookNotifier?: IWebhookNotifier;
-
 	constructor(private plugin: TasklyPlugin) {}
-
-	setWebhookNotifier(notifier?: IWebhookNotifier): void {
-		this.webhookNotifier = notifier;
-	}
 
 	/**
 	 * Toggle completion status for recurring tasks on a specific date
@@ -179,18 +173,6 @@ export class RecurringTaskService {
 			updatedTask: updatedTask,
 		});
 
-		// Step 5: Trigger webhook for recurring task completion
-		if (newComplete && this.webhookNotifier) {
-			try {
-				await this.webhookNotifier.triggerWebhook("recurring.instance.completed", {
-					task: updatedTask,
-					date: dateStr,
-					targetDate: targetDate,
-				});
-			} catch (webhookError) {
-				console.error("Error triggering recurring task completion webhook:", webhookError);
-			}
-		}
 
 		// Step 6: Return authoritative data
 		return updatedTask;
@@ -311,20 +293,7 @@ export class RecurringTaskService {
 			updatedTask: updatedTask,
 		});
 
-		// Step 6: Trigger webhook for skipped instance
-		if (newSkipped && this.webhookNotifier) {
-			try {
-				await this.webhookNotifier.triggerWebhook("recurring.instance.skipped", {
-					task: updatedTask,
-					date: dateStr,
-					targetDate: targetDate,
-				});
-			} catch (webhookError) {
-				console.error("Error triggering recurring task skip webhook:", webhookError);
-			}
-		}
-
-		// Step 7: Return authoritative data
+		// Step 6: Return authoritative data
 		return updatedTask;
 	}
 }

@@ -1,4 +1,4 @@
-import { FieldMapping, StatusConfig, WebhookConfig } from "../types";
+import { FieldMapping, StatusConfig } from "../types";
 import type { FileFilterConfig } from "../suggest/FileSuggestHelper";
 
 // New multi-field mapping for MVP
@@ -72,8 +72,6 @@ export interface TasklySettings {
 	enableAPI: boolean;
 	apiPort: number;
 	apiAuthToken: string;
-	// Webhook settings
-	webhooks: WebhookConfig[];
 	// User-defined field mappings (optional)
 	userFields?: UserMappedField[];
 	// Default visible properties for task cards (when no saved view is active)

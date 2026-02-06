@@ -23,7 +23,6 @@ const CSS_FILES = [
     // BEM View Files
     'styles/task-list-view.css',     // TaskListView component with proper BEM scoping
     'styles/settings-view.css',      // SettingsView component with proper BEM scoping
-    'styles/webhook-settings.css',   // Webhook settings UI with proper BEM scoping
     'styles/bases-views.css',        // Bases integration views (list and kanban)
 
     // Polish & Enhancements (load last to override)

@@ -157,15 +157,10 @@
  * - createCard() - Main card creation function
  * - createCardInput() - Text, number, color, checkbox inputs
  * - createCardSelect() - Dropdowns with options
- * - createCardTextarea() - Multi-line text input
- * - createCardUrlInput() - URL input with validation
  * - createCardNumberInput() - Number input with min/max
  * - createStatusBadge() - Active/inactive/completed badges
  * - createDeleteHeaderButton() - Delete button for card header
- * - createEditHeaderButton() - Edit button for card header
- * - createInfoBadge() - Read-only information badge
  * - setupCardDragAndDrop() - Enable drag & drop reordering
- * - showCardLoading() - Loading state utility
  * - showCardEmptyState() - Empty state with optional action
  *
  * COLLAPSIBLE CARDS:
@@ -214,7 +209,7 @@ export interface CardConfig {
 }
 
 /** Header action button (small icons in card header) */
-export interface CardHeaderButton {
+interface CardHeaderButton {
 	/** Obsidian icon name */
 	icon: string;
 	/** Button style variant */
@@ -226,7 +221,7 @@ export interface CardHeaderButton {
 }
 
 /** Content section containing form rows */
-export interface CardSection {
+interface CardSection {
 	rows: CardRow[];
 }
 
@@ -241,7 +236,7 @@ export interface CardRow {
 }
 
 /** Action button in card footer */
-export interface CardButton {
+interface CardButton {
 	/** Button text */
 	text: string;
 	/** Optional Obsidian icon name */
@@ -615,45 +610,6 @@ export function setupCardDragAndDrop(
 	});
 }
 
-// =====================================================================
-// ADDITIONAL HELPER FUNCTIONS FOR SETTINGS-WIDE USAGE
-// =====================================================================
-
-/**
- * Creates an edit header button with consistent styling
- */
-export function createEditHeaderButton(onClick: () => void, tooltip?: string): CardHeaderButton {
-	return {
-		icon: "edit",
-		variant: "edit",
-		tooltip: tooltip || "Edit",
-		onClick,
-	};
-}
-
-/**
- * Creates a textarea element with card styling
- */
-export function createCardTextarea(
-	placeholder?: string,
-	value?: string,
-	rows = 3
-): HTMLTextAreaElement {
-	const textarea = document.createElement("textarea");
-	textarea.addClass("taskly-settings__card-input");
-	textarea.rows = rows;
-
-	if (placeholder) {
-		textarea.placeholder = placeholder;
-	}
-
-	if (value) {
-		textarea.value = value;
-	}
-
-	return textarea;
-}
-
 /**
  * Creates a number input with min/max constraints
  */
@@ -671,68 +627,6 @@ export function createCardNumberInput(
 	if (value !== undefined) input.value = value.toString();
 
 	return input;
-}
-
-/**
- * Creates a URL input with validation styling.
- *
- * Accepts http:// and https:// protocols.
- */
-export function createCardUrlInput(placeholder?: string, value?: string): HTMLInputElement {
-	const input = document.createElement("input");
-	input.type = "url";
-	input.addClass("taskly-settings__card-input");
-
-	// Add pattern validation to accept http/https URL protocols
-	input.pattern = "^https?://.*";
-	input.title = "Enter an http:// or https:// URL";
-
-	if (placeholder) {
-		input.placeholder = placeholder;
-	}
-
-	if (value) {
-		input.value = value;
-	}
-
-	return input;
-}
-
-/**
- * Creates a card with just content (no header or actions)
- */
-export function createSimpleCard(container: HTMLElement, rows: CardRow[]): HTMLElement {
-	return createCard(container, {
-		header: {
-			primaryText: "", // Will be hidden by CSS if empty
-		},
-		content: {
-			sections: [{ rows }],
-		},
-	});
-}
-
-/**
- * Creates an info badge for displaying read-only information
- */
-export function createInfoBadge(text: string): HTMLElement {
-	const badge = document.createElement("span");
-	badge.addClass("taskly-settings__card-info-badge");
-	badge.textContent = text;
-	return badge;
-}
-
-/**
- * Utility to clear a container and show loading state
- */
-export function showCardLoading(container: HTMLElement, message = "Loading..."): void {
-	container.empty();
-	const loadingCard = container.createDiv("taskly-settings__card");
-	const loadingContent = loadingCard.createDiv("taskly-settings__card-content");
-	loadingContent.style.textAlign = "center";
-	loadingContent.style.padding = "2rem";
-	loadingContent.style.color = "var(--text-muted)";
-	loadingContent.textContent = message;
 }
 
 /**

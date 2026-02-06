@@ -1,6 +1,6 @@
 import { IncomingMessage, ServerResponse } from "http";
 
-export interface APIResponse<T = any> {
+interface APIResponse<T = any> {
 	success: boolean;
 	data?: T;
 	error?: string;

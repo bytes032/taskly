@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { BaseController } from "./BaseController";
 import { NaturalLanguageParser } from "../services/NaturalLanguageParser";
-import { TaskCreationData, IWebhookNotifier } from "../types";
+import { TaskCreationData } from "../types";
 import { TaskService } from "../services/TaskService";
 import TasklyPlugin from "../main";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -11,8 +11,7 @@ export class SystemController extends BaseController {
 	constructor(
 		private plugin: TasklyPlugin,
 		private taskService: TaskService,
-		private nlParser: NaturalLanguageParser,
-		private webhookNotifier: IWebhookNotifier
+		private nlParser: NaturalLanguageParser
 	) {
 		super();
 	}
@@ -133,13 +132,6 @@ export class SystemController extends BaseController {
 
 			// Create the task - TaskService.createTask() applies defaults automatically
 			const result = await this.taskService.createTask(taskData);
-
-			// Trigger webhook for task creation via NLP
-			await this.webhookNotifier.triggerWebhook("task.created", {
-				task: result.taskInfo,
-				source: "nlp",
-				originalText: body.text,
-			});
 
 			this.sendResponse(
 				res,

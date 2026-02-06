@@ -1,11 +1,10 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { parse } from "url";
 import { BaseController } from "./BaseController";
-import { TaskInfo, TaskCreationData, FilterQuery, IWebhookNotifier } from "../types";
+import { TaskInfo, TaskCreationData, FilterQuery } from "../types";
 import { TaskService } from "../services/TaskService";
 import { FilterService } from "../services/FilterService";
 import { TaskManager } from "../utils/TaskManager";
-import { StatusManager } from "../services/StatusManager";
 import TasklyPlugin from "../main";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Get, Post, Put, Delete } from "../utils/OpenAPIDecorators";
@@ -29,9 +28,7 @@ export class TasksController extends BaseController {
 		private plugin: TasklyPlugin,
 		private taskService: TaskService,
 		private filterService: FilterService,
-		private cacheManager: TaskManager,
-		private statusManager: StatusManager,
-		private webhookNotifier: IWebhookNotifier
+		private cacheManager: TaskManager
 	) {
 		super();
 	}
@@ -142,9 +139,6 @@ export class TasksController extends BaseController {
 			// TaskService.createTask() applies defaults automatically
 			const result = await this.taskService.createTask(taskData);
 
-			// Trigger webhook for task creation
-			await this.webhookNotifier.triggerWebhook("task.created", { task: result.taskInfo });
-
 			this.sendResponse(res, 201, this.successResponse(result.taskInfo));
 		} catch (error: any) {
 			this.sendResponse(res, 400, this.errorResponse(error.message));
@@ -200,12 +194,6 @@ export class TasksController extends BaseController {
 
 			const updatedTask = await this.taskService.updateTask(originalTask, updates);
 
-			// Trigger webhook for task update
-			await this.webhookNotifier.triggerWebhook("task.updated", {
-				task: updatedTask,
-				previous: originalTask,
-			});
-
 			this.sendResponse(res, 200, this.successResponse(updatedTask));
 		} catch (error: any) {
 			this.sendResponse(res, 400, this.errorResponse(error.message));
@@ -233,9 +221,6 @@ export class TasksController extends BaseController {
 			}
 
 			await this.taskService.deleteTask(task);
-
-			// Trigger webhook for task deletion
-			await this.webhookNotifier.triggerWebhook("task.deleted", { task });
 
 			this.sendResponse(
 				res,
@@ -269,19 +254,6 @@ export class TasksController extends BaseController {
 
 			const updatedTask = await this.taskService.toggleStatus(task);
 
-			// Trigger webhook for status change (might be completion)
-			const wasCompleted = this.statusManager.isCompletedStatus(task.status);
-			const isCompleted = this.statusManager.isCompletedStatus(updatedTask.status);
-
-			if (!wasCompleted && isCompleted) {
-				await this.webhookNotifier.triggerWebhook("task.completed", { task: updatedTask });
-			} else {
-				await this.webhookNotifier.triggerWebhook("task.updated", {
-					task: updatedTask,
-					previous: task,
-				});
-			}
-
 			this.sendResponse(res, 200, this.successResponse(updatedTask));
 		} catch (error: any) {
 			this.sendResponse(res, 400, this.errorResponse(error.message));
@@ -309,13 +281,6 @@ export class TasksController extends BaseController {
 			}
 
 			const updatedTask = await this.taskService.toggleArchive(task);
-
-			// Trigger webhook for archive/unarchive
-			if (updatedTask.archived) {
-				await this.webhookNotifier.triggerWebhook("task.archived", { task: updatedTask });
-			} else {
-				await this.webhookNotifier.triggerWebhook("task.unarchived", { task: updatedTask });
-			}
 
 			this.sendResponse(res, 200, this.successResponse(updatedTask));
 		} catch (error: any) {
@@ -396,40 +361,6 @@ export class TasksController extends BaseController {
 			);
 		} catch (error: any) {
 			this.sendResponse(res, 400, this.errorResponse(error.message));
-		}
-	}
-
-	@Get("/api/filter-options")
-	async getFilterOptions(req: IncomingMessage, res: ServerResponse): Promise<void> {
-		try {
-			const filterOptions = await this.filterService.getFilterOptions();
-			this.sendResponse(res, 200, this.successResponse(filterOptions));
-		} catch (error: any) {
-			this.sendResponse(res, 500, this.errorResponse(error.message));
-		}
-	}
-
-	@Get("/api/stats")
-	async getStats(req: IncomingMessage, res: ServerResponse): Promise<void> {
-		try {
-			const allTasks = await this.cacheManager.getAllTasks();
-			const stats = {
-				total: allTasks.length,
-				completed: allTasks.filter((t) => this.statusManager.isCompletedStatus(t.status))
-					.length,
-				active: allTasks.filter(
-					(t) => !this.statusManager.isCompletedStatus(t.status) && !t.archived
-				).length,
-				overdue: allTasks.filter((t) => {
-					if (this.statusManager.isCompletedStatus(t.status) || t.archived) return false;
-					return t.due && new Date(t.due) < new Date();
-				}).length,
-				archived: allTasks.filter((t) => t.archived).length,
-			};
-
-			this.sendResponse(res, 200, this.successResponse(stats));
-		} catch (error: any) {
-			this.sendResponse(res, 500, this.errorResponse(error.message));
 		}
 	}
 

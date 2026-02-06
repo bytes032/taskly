@@ -281,16 +281,6 @@ export class NotificationService {
 			this.showInAppNotice(message, item.taskPath);
 		}
 
-		// Trigger webhook for reminder
-		if (this.plugin.apiService) {
-			await this.plugin.apiService.triggerWebhook("reminder.triggered", {
-				task,
-				reminder: item.reminder,
-				notificationTime: new Date(item.notifyAt).toISOString(),
-				message,
-				notificationType: this.plugin.settings.notificationType,
-			});
-		}
 	}
 
 	private showInAppNotice(message: string, taskPath: string): void {

@@ -242,9 +242,6 @@ export default class TasklyPlugin extends Plugin {
 				this.cacheManager
 			);
 
-			// Connect webhook notifier to TaskService for file-based operations
-			this.taskService.setWebhookNotifier(this.apiService);
-
 			// Start the API server
 			await this.apiService.start();
 			new Notice(`Taskly API started on port ${this.apiService.getPort()}`);
