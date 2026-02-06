@@ -1,0 +1,65 @@
+{
+  "name": "taskly",
+  "version": "1.0.0",
+  "description": "Taskly: note-based task management.",
+  "main": "main.js",
+  "scripts": {
+    "build": "npm run build-css && tsc -noEmit --skipLibCheck && node esbuild.config.mjs production",
+    "dev": "npm run build-css && node esbuild.config.mjs",
+    "copy-files": "node copy-files.mjs",
+    "build-css": "node build-css.mjs",
+    "version": "node version-bump.mjs && git add manifest.json versions.json",
+    "lint": "eslint src/ --ext .ts",
+    "lint:fix": "eslint src/ --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.{ts,js,json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,js,json,md}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "obsidian",
+    "obsidian-plugin",
+    "task-management",
+    "productivity",
+    "notes"
+  ],
+  "author": "Todor",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bytes032/taskly.git"
+  },
+  "homepage": "https://github.com/bytes032/taskly",
+  "bugs": {
+    "url": "https://github.com/bytes032/taskly/issues"
+  },
+  "devDependencies": {
+    "@codemirror/autocomplete": "^6.19.1",
+    "@codemirror/state": "^6.5.2",
+    "@electron/asar": "^3.4.1",
+    "@types/node": "^24.3.0",
+    "@types/yaml": "^1.9.6",
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "builtin-modules": "^5.0.0",
+    "esbuild": "^0.25.9",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-obsidianmd": "^0.0.2",
+    "eslint-plugin-prettier": "^5.5.4",
+    "monkey-around": "^3.0.0",
+    "obsidian": "latest",
+    "obsidian-typings": "^4.49.0",
+    "prettier": "^3.6.2",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@codemirror/view": "^6.37.2",
+    "chrono-node": "^2.7.5",
+    "date-fns": "^4.1.0",
+    "obsidian-daily-notes-interface": "^0.9.4",
+    "reflect-metadata": "^0.2.2",
+    "rrule": "^2.8.1",
+    "yaml": "^2.3.1"
+  }
+}

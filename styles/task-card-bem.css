@@ -1,0 +1,1328 @@
+/* =================================================================
+   TASKCARD COMPONENT - BEM NAMING CONVENTION & PROPER SCOPING
+   ================================================================= */
+
+/* All TaskCard styles are scoped under .taskly-plugin for proper isolation */
+
+.taskly-plugin .task-card {
+    /* Layout & Structure */
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+
+    /* Spacing & Sizing - Refined spacing for better visual breathing room */
+    padding: 10px 14px;
+    margin-bottom: 1px;
+
+    /* Visual Styling - Subtle depth with minimal shadow */
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    box-shadow: none;
+
+    /* Interactions & Accessibility - Smooth transitions */
+    transition:
+        background-color var(--tn-duration-fast) ease,
+        box-shadow var(--tn-duration-fast) ease,
+        transform var(--tn-duration-fast) var(--tn-ease-out-expo);
+    outline: none;
+    role: listitem;
+    tabindex: 0;
+}
+
+.taskly-plugin .task-card:hover {
+    background-color: var(--background-modifier-hover);
+    box-shadow: var(--tn-shadow-subtle);
+}
+
+.taskly-plugin .task-card:active {
+    transform: scale(0.995);
+}
+
+.taskly-plugin .task-card:focus {
+    background-color: var(--background-modifier-hover);
+    outline: 2px solid var(--background-modifier-border-focus);
+    outline-offset: -2px;
+}
+
+.taskly-plugin .task-card:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.taskly-plugin .task-card:last-child {
+    margin-bottom: 0;
+}
+
+/* Remove border radius for cleaner list appearance */
+.taskly-plugin .task-card:first-child,
+.taskly-plugin .task-card:last-child,
+.taskly-plugin .task-card:first-child:last-child {
+    border-radius: 0;
+}
+
+/* =================================================================
+   TASKCARD ELEMENTS (BEM __element)
+   ================================================================= */
+
+.taskly-plugin .task-card__main-row {
+    display: flex;
+    align-items: center;
+    gap: var(--tn-spacing-sm);
+    width: 100%;
+    position: relative;
+}
+
+.taskly-plugin .task-card__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.taskly-plugin .task-card__title {
+    font-size: var(--tn-font-size-lg);
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--tn-text-normal);
+    margin: 0;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+    transition: color var(--tn-transition-fast);
+    display: flex;
+    align-items: center;
+    gap: var(--tn-spacing-sm);
+}
+
+.taskly-plugin .task-card__title-text {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+}
+
+.taskly-plugin .task-card__title-text.completed {
+    opacity: 0.6;
+}
+
+.taskly-plugin .task-card__metadata {
+    font-size: 0.8125rem;
+    color: var(--tn-text-muted);
+    line-height: 1.3;
+    margin: 0;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+    opacity: 0.85;
+}
+
+.taskly-plugin .task-card__metadata-item {
+    display: flex;
+    align-items: center;
+    gap: var(--tn-spacing-xs);
+    white-space: nowrap;
+}
+
+.taskly-plugin .task-card__metadata-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--tn-spacing-xs);
+    padding: 3px 8px;
+    border-radius: var(--tn-radius-md);
+    font-size: var(--tn-font-size-sm);
+    line-height: 1.2;
+    font-weight: 500;
+    background: var(--background-secondary);
+    color: var(--text-muted);
+    border: 1px solid var(--background-modifier-border);
+    transition: background var(--tn-transition-fast), border-color var(--tn-transition-fast);
+}
+
+.taskly-plugin .task-card__metadata-pill:hover {
+    background: var(--background-modifier-hover);
+    border-color: var(--background-modifier-border-hover);
+}
+
+/* .task-card__tag styling moved to polish-enhancements.css for unified tag system */
+
+.taskly-plugin .task-card__due-date {
+    color: var(--tn-color-success);
+    font-size: var(--tn-font-size-sm);
+    font-weight: 400;
+    padding: var(--tn-spacing-xs) var(--tn-spacing-xs);
+    border-radius: var(--tn-radius-xs);
+    background: color-mix(in srgb, var(--tn-color-success) 15%, var(--tn-bg-primary));
+}
+
+.taskly-plugin .task-card__due-date--overdue {
+    color: var(--tn-color-error);
+    background: color-mix(in srgb, var(--tn-color-error) 15%, var(--tn-bg-primary));
+}
+
+.taskly-plugin .task-card__due-date--today {
+    color: var(--tn-color-warning);
+    background: color-mix(in srgb, var(--tn-color-warning) 15%, var(--tn-bg-primary));
+}
+
+/* Simplified info display - no progressive disclosure for Todoist style */
+
+/* Drag handle indicator */
+.taskly-plugin .task-card__drag-handle {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 20px;
+    background: repeating-linear-gradient(
+        to bottom,
+        var(--tn-text-faint) 0px,
+        var(--tn-text-faint) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    opacity: 0;
+    transition: opacity var(--tn-transition-fast);
+    border-radius: var(--tn-radius-xs);
+}
+
+.taskly-plugin .task-card[draggable="true"]:hover .task-card__drag-handle {
+    opacity: 0.5;
+}
+
+.taskly-plugin .task-card[draggable="true"]:active .task-card__drag-handle {
+    opacity: 0.8;
+}
+
+/* Container queries for adaptive layouts */
+@container (max-width: 300px) {
+    .taskly-plugin .task-card {
+        padding: var(--tn-spacing-sm) var(--tn-spacing-md);
+    }
+
+    .taskly-plugin .task-card__quick-actions {
+        gap: 2px;
+    }
+
+    .taskly-plugin .task-card__quick-action {
+        width: 20px;
+        height: 20px;
+    }
+
+    .taskly-plugin .task-card__metadata {
+        gap: var(--tn-spacing-xs);
+    }
+}
+
+.taskly-plugin .task-card__status-dot {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid color-mix(in srgb, var(--tn-border-color) 80%, transparent);
+    background-color: transparent;
+    transition:
+        border-color var(--tn-duration-fast) ease,
+        background-color var(--tn-duration-fast) ease,
+        transform var(--tn-duration-fast) var(--tn-ease-out-back),
+        box-shadow var(--tn-duration-fast) ease;
+    position: relative;
+    box-shadow: none;
+}
+
+.taskly-plugin .task-card__status-dot:hover {
+    background-color: color-mix(in srgb, var(--next-status-color, var(--tn-interactive-accent)) 30%, transparent);
+    border-color: var(--next-status-color, var(--tn-interactive-accent));
+    transform: scale(1.15);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--next-status-color, var(--interactive-accent)) 15%, transparent);
+}
+
+/* Completed status - filled circle with status color */
+.taskly-plugin .task-card--completed > .task-card__main-row .task-card__status-dot {
+    background-color: var(--current-status-color, var(--tn-color-success));
+    border-color: var(--current-status-color, var(--tn-color-success));
+    box-shadow:
+        inset 0 0 0 8px var(--current-status-color, var(--color-green)),
+        0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.taskly-plugin .task-card--completed > .task-card__main-row .task-card__status-dot:hover {
+    background-color: color-mix(in srgb, var(--next-status-color, var(--tn-interactive-accent)) 50%, var(--current-status-color, var(--tn-color-success)));
+    border-color: var(--next-status-color, var(--tn-interactive-accent));
+}
+
+/* Completion animation - subtle pulse when task is completed */
+@keyframes status-complete {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--current-status-color, var(--tn-color-success)) 40%, transparent);
+    }
+    50% {
+        transform: scale(1.2);
+        box-shadow: 0 0 0 6px color-mix(in srgb, var(--current-status-color, var(--tn-color-success)) 0%, transparent);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: none;
+    }
+}
+
+.taskly-plugin .task-card--completed.task-card--just-completed > .task-card__main-row .task-card__status-dot {
+    animation: status-complete 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Status dot with icon mode - uses Lucide icons from theme */
+.taskly-plugin .task-card__status-dot--icon {
+    border: none;
+    background-color: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.taskly-plugin .task-card__status-dot--icon svg {
+    width: 18px;
+    height: 18px;
+    color: var(--current-status-color, var(--tn-text-muted));
+    stroke-width: 2;
+}
+
+.taskly-plugin .task-card__status-dot--icon:hover svg {
+    color: var(--next-status-color, var(--tn-interactive-accent));
+}
+
+/* Completed state for icon mode */
+.taskly-plugin .task-card--completed > .task-card__main-row .task-card__status-dot--icon {
+    background-color: transparent;
+}
+
+.taskly-plugin .task-card--completed > .task-card__main-row .task-card__status-dot--icon svg {
+    color: var(--current-status-color, var(--tn-color-success));
+}
+
+.taskly-plugin .task-card--completed > .task-card__main-row .task-card__status-dot--icon:hover svg {
+    color: var(--next-status-color, var(--tn-interactive-accent));
+}
+
+/* =================================================================
+   BADGE AREA - Groups secondary indicators (recurring, reminder)
+   ================================================================= */
+
+.taskly-plugin .task-card__badges {
+    display: flex;
+    align-items: center;
+    gap: var(--tn-spacing-xs);
+    flex-shrink: 0;
+}
+
+/* Hide badges container when empty */
+.taskly-plugin .task-card__badges:empty {
+    display: none;
+}
+
+.taskly-plugin .task-card__recurring-indicator {
+    width: 18px;
+    height: 18px;
+    color: var(--tn-text-muted);
+    opacity: 0.7;
+    display: none; /* Hidden by default, shown via modifier */
+    align-items: center;
+    justify-content: center;
+    transition:
+        background-color var(--tn-duration-fast) ease,
+        opacity var(--tn-duration-fast) ease,
+        transform var(--tn-duration-fast) var(--tn-ease-out-back);
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.taskly-plugin .task-card__recurring-indicator:hover {
+    opacity: 1;
+    background: var(--background-modifier-hover);
+    transform: scale(1.1);
+}
+
+.taskly-plugin .task-card__recurring-indicator svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Recurrence instance statistics pills */
+.taskly-plugin .task-card__metadata-pill--completed-instances {
+    color: var(--text-success);
+}
+
+.taskly-plugin .task-card__metadata-pill--skipped-instances {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+/* Reminder indicator */
+.taskly-plugin .task-card__reminder-indicator {
+    width: 18px;
+    height: 18px;
+    color: var(--tn-text-muted);
+    opacity: 0.7;
+    transition:
+        background-color var(--tn-duration-fast) ease,
+        opacity var(--tn-duration-fast) ease,
+        transform var(--tn-duration-fast) var(--tn-ease-out-back);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.taskly-plugin .task-card__reminder-indicator:hover {
+    opacity: 1;
+    background: var(--background-modifier-hover);
+    transform: scale(1.1);
+}
+
+.taskly-plugin .task-card__reminder-indicator svg {
+    width: 14px;
+    height: 14px;
+}
+
+.taskly-plugin .task-card__context-menu {
+    width: 24px;
+    height: 24px;
+    color: var(--tn-text-faint);
+    opacity: 0;
+    transition:
+        opacity var(--tn-duration-fast) ease,
+        background-color var(--tn-duration-fast) ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+.taskly-plugin .task-card__context-menu:hover {
+    opacity: 1 !important;
+    color: var(--tn-text-normal);
+    background: var(--background-modifier-hover);
+}
+
+.taskly-plugin .task-card:hover .task-card__context-menu {
+    opacity: 0.5;
+}
+
+.taskly-plugin .task-card__context-menu svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Quick actions removed for Todoist-style simplicity */
+
+/* =====================================================================
+   HOVER CONTEXT MENU INTERACTIONS
+   ===================================================================== */
+
+
+/* Hoverable date text elements */
+.taskly-plugin .task-card__metadata-date {
+    transition: all var(--tn-transition-fast);
+    border-radius: var(--tn-radius-sm);
+    padding: 3px 6px;
+    margin: -3px -6px;
+    position: relative;
+}
+
+.taskly-plugin .task-card__metadata-date:hover {
+    background: var(--background-modifier-hover);
+    color: var(--interactive-accent);
+}
+
+.taskly-plugin .task-card__metadata-date--due:hover {
+    background: color-mix(in srgb, var(--tn-color-error) 12%, transparent);
+    color: var(--tn-color-error);
+}
+
+/* Overdue due dates - use the hover background color for text */
+.taskly-plugin .task-card__metadata-date--overdue {
+    color: var(--tn-color-error);
+}
+
+
+/* =================================================================
+   TASKCARD MODIFIERS (BEM --modifier)
+   ================================================================= */
+
+/* Completion State - Use theme colors */
+.taskly-plugin .task-card--completed > .task-card__main-row {
+    opacity: 0.6;
+}
+
+.taskly-plugin .task-card--completed > .task-card__main-row .task-card__title {
+    text-decoration: line-through;
+    color: var(--tn-text-muted);
+}
+
+/* Skipped State - Muted appearance for skipped recurring instances */
+.taskly-plugin .task-card--skipped {
+    opacity: 0.5;
+}
+
+.taskly-plugin .task-card--skipped > .task-card__main-row .task-card__title {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.taskly-plugin .task-card--skipped > .task-card__main-row .task-card__status-dot {
+    background-color: rgba(128, 128, 128, 0.4);
+    border-color: var(--text-faint);
+    border-style: dashed;
+}
+
+/* Archived State */
+.taskly-plugin .task-card--archived {
+    opacity: 0.5;
+    background-color: transparent;
+}
+
+/* Recurring Task */
+.taskly-plugin .task-card--recurring .task-card__recurring-indicator {
+    display: flex;
+}
+
+/* Skipped recurring instance styling */
+.taskly-plugin .recurring-skipped,
+.taskly-plugin .task-card--recurring-skipped {
+    opacity: 0.6;
+}
+
+.taskly-plugin .recurring-skipped .task-card__title,
+.taskly-plugin .task-card--recurring-skipped .task-card__title {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+/* Status colors - Use dynamic status colors from user settings */
+/* Use child combinator (>) to prevent nested cards from inheriting parent status styling */
+.taskly-plugin .task-card[data-status] > .task-card__main-row .task-card__status-dot {
+    border-color: var(--current-status-color, var(--tn-border-color));
+}
+
+
+/* Minimal animations - Use theme colors */
+.taskly-plugin .task-card--updated {
+    background-color: var(--tn-interactive-hover);
+    transition: background-color var(--tn-transition-fast);
+}
+
+/* =================================================================
+   RESPONSIVE DESIGN
+   ================================================================= */
+
+/* Mobile & Touch Devices - Use theme colors */
+@media (pointer: coarse) {
+    .taskly-plugin .task-card {
+        padding: 12px 16px;
+        min-height: 44px;
+        margin-bottom: 2px;
+    }
+
+    .taskly-plugin .task-card:active {
+        background-color: var(--tn-interactive-hover);
+    }
+
+    /* Larger touch targets */
+    .taskly-plugin .task-card__context-menu {
+        width: 24px;
+        height: 24px;
+        opacity: 1;
+    }
+
+    .taskly-plugin .task-card__context-menu svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Larger status dots for touch */
+    .taskly-plugin .task-card__status-dot {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* High density displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .taskly-plugin .task-card {
+        border-left-width: 1px;
+    }
+
+    .taskly-plugin .task-card::before {
+        width: 1px;
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .taskly-plugin .task-card,
+    .taskly-plugin .task-card *,
+    .taskly-plugin .task-card::before,
+    .taskly-plugin .task-card::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .taskly-plugin .task-card--dragging {
+        animation: none;
+    }
+}
+
+/* Print styles */
+@media print {
+    .taskly-plugin .task-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        background: white !important;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+    }
+
+    .taskly-plugin .task-card__quick-actions,
+    .taskly-plugin .task-card__context-menu,
+    .taskly-plugin .task-card__enhanced-info {
+        display: none !important;
+    }
+}
+
+/* Compact mode for smaller screens - Todoist style */
+@media (max-width: 768px) {
+    .taskly-plugin .task-card {
+        padding: 10px 14px;
+    }
+
+    .taskly-plugin .task-card__content {
+        gap: 1px;
+    }
+
+    .taskly-plugin .task-card__title {
+        font-size: 13px;
+    }
+
+    .taskly-plugin .task-card__metadata {
+        font-size: 11px;
+    }
+}
+
+/* =================================================================
+   TASKCARD DRAG AND DROP STATES
+   ================================================================= */
+
+/* Draggable task cards */
+.taskly-plugin .task-card[draggable="true"] {
+    transition: all var(--tn-transition-fast);
+}
+
+.taskly-plugin .task-card[draggable="true"]:hover {
+    cursor: grab;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--tn-shadow-color) 15%, transparent);
+}
+
+.taskly-plugin .task-card[draggable="true"]:active {
+    cursor: grabbing;
+    transform: scale(0.98) rotate(1deg);
+}
+
+/* Enhanced dragging state */
+.taskly-plugin .task-card--dragging {
+    opacity: 0.8;
+    transform: rotate(5deg) scale(1.02);
+    cursor: grabbing;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow: 0 8px 32px color-mix(in srgb, var(--tn-shadow-color) 30%, transparent),
+                0 0 0 1px color-mix(in srgb, var(--tn-interactive-accent) 50%, transparent);
+    transition: none;
+    animation: drag-pulse 2s infinite ease-in-out;
+}
+
+@keyframes drag-pulse {
+    0%, 100% {
+        box-shadow: 0 8px 32px color-mix(in srgb, var(--tn-shadow-color) 30%, transparent),
+                    0 0 0 1px color-mix(in srgb, var(--tn-interactive-accent) 50%, transparent);
+    }
+    50% {
+        box-shadow: 0 12px 40px color-mix(in srgb, var(--tn-shadow-color) 40%, transparent),
+                    0 0 0 2px color-mix(in srgb, var(--tn-interactive-accent) 70%, transparent);
+    }
+}
+
+/* Drag preview ghost */
+.taskly-plugin .task-card--drag-ghost {
+    opacity: 0.3;
+    transform: scale(0.95);
+    transition: all var(--tn-transition-fast);
+    pointer-events: none;
+    filter: blur(1px);
+}
+
+/* Drop zone feedback */
+.taskly-plugin .task-card--drop-target {
+    border: 2px dashed var(--tn-interactive-accent);
+    background: color-mix(in srgb, var(--tn-interactive-accent) 5%, var(--tn-bg-primary));
+    transform: scale(1.02);
+    transition: all var(--tn-transition-fast);
+}
+
+.taskly-plugin .task-card--drop-target::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: var(--tn-radius-sm);
+    background: linear-gradient(
+        45deg,
+        transparent 25%,
+        color-mix(in srgb, var(--tn-interactive-accent) 10%, transparent) 25%,
+        color-mix(in srgb, var(--tn-interactive-accent) 10%, transparent) 50%,
+        transparent 50%,
+        transparent 75%,
+        color-mix(in srgb, var(--tn-interactive-accent) 10%, transparent) 75%
+    );
+    background-size: 8px 8px;
+    animation: drop-zone-shimmer 1s linear infinite;
+    z-index: -1;
+}
+
+@keyframes drop-zone-shimmer {
+    0% { background-position: 0 0; }
+    100% { background-position: 8px 8px; }
+}
+
+/* =================================================================
+   LAYOUT MODIFIERS - Inline Mode for Task Link Widgets
+   ================================================================= */
+
+/* Inline layout - single line, compact display for editor task links */
+.taskly-plugin .task-card--layout-inline {
+    /* Use inline display to respect line boundaries */
+    display: inline !important;
+
+    /* Minimal padding - no indentation needed in inline mode */
+    padding: 2px 0;
+    margin: 0;
+    margin-bottom: 0;
+
+    /* Visual style - transparent background */
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+
+    /* Size constraints */
+    min-height: auto;
+
+    /* Prevent text from breaking into multiple lines */
+    white-space: nowrap;
+
+    /* Force inline behavior */
+    vertical-align: baseline;
+}
+
+.taskly-plugin .task-card--layout-inline:hover {
+    background-color: transparent;
+}
+
+/* Disable drag cursor for inline tasks - they're not draggable */
+.taskly-plugin .task-card--layout-inline[draggable="true"]:hover {
+    cursor: default;
+    transform: none;
+    box-shadow: none;
+}
+
+.taskly-plugin .task-card--layout-inline[draggable="true"]:active {
+    cursor: default;
+    transform: none;
+}
+
+/* Remove chevron gutter padding in inline mode */
+.taskly-plugin .task-card--layout-inline,
+.taskly-plugin .task-card--layout-inline.task-card--chevron-left {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Main row in inline mode - horizontal layout */
+.taskly-plugin .task-card--layout-inline .task-card__main-row {
+    display: inline !important;
+    vertical-align: baseline;
+}
+
+/* Content in inline mode - horizontal, truncated */
+.taskly-plugin .task-card--layout-inline .task-card__content {
+    display: inline !important;
+    vertical-align: baseline;
+}
+
+/* Title in inline mode - truncate with ellipsis */
+.taskly-plugin .task-card--layout-inline .task-card__title {
+    display: inline !important;
+    font-size: inherit; /* Use editor's font size */
+    font-weight: 400;
+    margin: 0;
+    vertical-align: baseline;
+}
+
+/* Title text in inline mode - ensure ellipsis works */
+.taskly-plugin .task-card--layout-inline .task-card__title-text {
+    display: inline !important;
+    vertical-align: baseline;
+}
+
+/* Metadata in inline mode - stays on same line, scrolls if needed */
+.taskly-plugin .task-card--layout-inline .task-card__metadata {
+    display: inline-block !important;
+    font-size: var(--tn-font-size-sm);
+    margin: 0;
+    padding: 0;
+    vertical-align: text-bottom;
+    position: relative;
+    top: -0.15em;
+    white-space: nowrap;
+    width: fit-content;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+
+/* Only apply spacing and min-width when metadata has content - prevents blank space when empty */
+.taskly-plugin .task-card--layout-inline .task-card__metadata:not(:empty) {
+    margin-left: 0.5em;
+    min-width: min(30%, 300px);
+}
+
+.taskly-plugin .task-card--layout-inline .task-card__metadata:hover {
+    scrollbar-width: thin;
+    scrollbar-color: var(--background-modifier-border) transparent;
+}
+
+.taskly-plugin .task-card--layout-inline .task-card__metadata::-webkit-scrollbar {
+    height: 0;
+}
+
+.taskly-plugin .task-card--layout-inline .task-card__metadata:hover::-webkit-scrollbar {
+    height: 4px;
+}
+
+.taskly-plugin .task-card--layout-inline .task-card__metadata::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.taskly-plugin .task-card--layout-inline .task-card__metadata::-webkit-scrollbar-thumb {
+    background: var(--background-modifier-border);
+    border-radius: 2px;
+}
+
+/* Wrapper for metadata items in inline mode */
+.taskly-plugin .task-card--layout-inline .task-card__metadata > * {
+    display: inline;
+    vertical-align: baseline;
+}
+
+.taskly-plugin .task-card--layout-inline .task-card__metadata > *:last-child {
+    margin-right: 0 !important;
+}
+
+/* Smaller status dot in inline mode */
+.taskly-plugin .task-card--layout-inline .task-card__status-dot {
+    display: inline-block;
+    width: 0.85em;
+    height: 0.85em;
+    margin-right: 0.25em;
+    border-width: 1.5px;
+    vertical-align: baseline;
+    transform: translateY(0.1em);
+}
+
+/* Compact indicators in inline mode */
+.taskly-plugin .task-card--layout-inline .task-card__recurring-indicator,
+.taskly-plugin .task-card--layout-inline .task-card__reminder-indicator {
+    display: inline-block;
+    position: static;
+    width: 0.85em;
+    height: 0.85em;
+    margin-right: 0.15em;
+    vertical-align: baseline;
+}
+
+/* Compact context menu in inline mode */
+.taskly-plugin .task-card--layout-inline .task-card__context-menu {
+    display: inline-block;
+    width: 0.9em;
+    height: 0.9em;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+/* Compact date displays in inline mode */
+.taskly-plugin .task-card--layout-inline .task-card__metadata-date {
+    display: inline;
+    font-size: var(--tn-font-size-sm);
+    padding: 0;
+    margin: 0 0.75em 0 0;
+    vertical-align: baseline;
+}
+
+/* Metadata property in inline mode */
+.taskly-plugin .task-card--layout-inline .task-card__metadata-property {
+    display: inline;
+    font-size: var(--tn-font-size-sm);
+    padding: 0;
+    margin: 0 0.75em 0 0;
+    vertical-align: baseline;
+}
+
+/* Metadata pills in inline mode */
+.taskly-plugin .task-card--layout-inline .task-card__metadata-pill {
+    display: inline;
+    margin: 0 0.75em 0 0;
+    vertical-align: baseline;
+}
+
+/* Metadata separators in inline mode */
+.taskly-plugin .task-card--layout-inline .task-card__metadata-separator {
+    display: inline;
+    vertical-align: baseline;
+}
+
+/* SVG icons in inline mode - ensure they don't affect line height */
+.taskly-plugin .task-card--layout-inline svg {
+    display: inline-block;
+    width: 0.85em;
+    height: 0.85em;
+    vertical-align: baseline;
+    transform: translateY(0.1em);
+}
+
+/* Ensure inline cards don't have bottom margin */
+.taskly-plugin .task-card--layout-inline:last-child {
+    margin-bottom: 0;
+}
+
+/* =================================================================
+   TABLE LAYOUT - Single row with columns
+   ================================================================= */
+
+/* Table container for consistent column alignment */
+.taskly-plugin .tn-table-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Table header row */
+.taskly-plugin .tn-table-header {
+    display: grid;
+    grid-template-columns: 24px 1fr 80px 80px 24px;
+    gap: var(--tn-spacing-md);
+    padding: 8px 14px;
+    border-bottom: 1px solid color-mix(in srgb, var(--background-modifier-border) 60%, transparent);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: transparent;
+}
+
+.taskly-plugin .tn-table-header__col {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.taskly-plugin .tn-table-header__col--due,
+.taskly-plugin .tn-table-header__col--date {
+    text-align: right;
+}
+
+/* Responsive header */
+@media (max-width: 600px) {
+    .taskly-plugin .tn-table-header {
+        grid-template-columns: 20px 1fr 60px 60px 20px;
+        gap: var(--tn-spacing-sm);
+    }
+}
+
+/* Table layout - row with fixed columns */
+.taskly-plugin .task-card--layout-table {
+    padding: var(--tn-spacing-sm) var(--tn-spacing-md);
+    margin-bottom: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--background-modifier-border) 40%, transparent);
+    border-radius: 0;
+    transition:
+        background-color var(--tn-duration-fast) ease,
+        box-shadow var(--tn-duration-fast) ease;
+}
+
+.taskly-plugin .task-card--layout-table:last-child {
+    border-bottom: none;
+}
+
+/* Subtle alternating row tint */
+.taskly-plugin .task-card--layout-table:nth-child(even) {
+    background: color-mix(in srgb, var(--background-secondary) 40%, transparent);
+}
+
+/* Visual divider between open and completed task groups */
+.taskly-plugin .task-card--status-open + .task-card--completed,
+.taskly-plugin .task-card--status-open + .task-card--archived {
+    margin-top: 12px;
+}
+
+/* Refined hover state with subtle lift — full opacity to remain visible on tinted rows */
+.taskly-plugin .task-card--layout-table:hover {
+    background: var(--background-modifier-hover);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--background-modifier-border) 30%, transparent);
+}
+
+/* Active/pressed state */
+.taskly-plugin .task-card--layout-table:active {
+    background: var(--background-modifier-hover);
+}
+
+.taskly-plugin .task-card--layout-table .task-card__main-row {
+    display: grid;
+    grid-template-columns: 24px 1fr 80px 80px 24px;
+    gap: var(--tn-spacing-md);
+    align-items: center;
+    width: 100%;
+}
+
+/* Table columns */
+.taskly-plugin .task-card__col {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.taskly-plugin .task-card__col--name {
+    font-size: var(--tn-font-size-md);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--tn-text-normal);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    overflow: visible;
+    white-space: normal;
+}
+
+/* In table layout, title text should not expand - let tags sit next to it */
+.taskly-plugin .task-card--layout-table .task-card__col--name .task-card__title-text {
+    flex: none;
+}
+
+.taskly-plugin .task-card__col--name .task-card__title-text.completed {
+    text-decoration: line-through;
+    color: var(--tn-text-muted);
+}
+
+/* Inline tags next to task name */
+.taskly-plugin .task-card__tags-inline {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* Inline tags in table name column - compact */
+.taskly-plugin .task-card__tags-inline .tag,
+.taskly-plugin .task-card__tags-inline .task-card__tag {
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.taskly-plugin .task-card__col--tags {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.taskly-plugin .task-card__col--due {
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
+    text-align: right;
+    opacity: 0.85;
+    transition: opacity var(--tn-duration-fast) ease;
+}
+
+.taskly-plugin .task-card__col--date {
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
+    text-align: right;
+    opacity: 0.85;
+    transition: opacity var(--tn-duration-fast) ease;
+}
+
+.taskly-plugin .task-card--layout-table:hover .task-card__col--date,
+.taskly-plugin .task-card--layout-table:hover .task-card__col--due {
+    opacity: 1;
+}
+
+/* Status dot in table layout */
+.taskly-plugin .task-card--layout-table .task-card__status-dot {
+    width: 14px;
+    height: 14px;
+    border-width: 1.5px;
+    opacity: 0.7;
+    transition:
+        opacity var(--tn-duration-fast) ease,
+        border-color var(--tn-duration-fast) ease,
+        transform var(--tn-duration-fast) var(--tn-ease-out-back),
+        box-shadow var(--tn-duration-fast) ease;
+}
+
+.taskly-plugin .task-card--layout-table:hover .task-card__status-dot {
+    opacity: 1;
+}
+
+.taskly-plugin .task-card--layout-table .task-card__status-dot:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--next-status-color, var(--interactive-accent)) 12%, transparent);
+}
+
+/* Context menu in table layout */
+.taskly-plugin .task-card--layout-table .task-card__context-menu {
+    justify-self: end;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    opacity: 0;
+    color: var(--text-faint);
+    transition:
+        opacity var(--tn-duration-fast) ease,
+        background-color var(--tn-duration-fast) ease,
+        color var(--tn-duration-fast) ease;
+}
+
+.taskly-plugin .task-card--layout-table:hover .task-card__context-menu {
+    opacity: 0.5;
+}
+
+.taskly-plugin .task-card--layout-table .task-card__context-menu:hover {
+    opacity: 1 !important;
+    background: var(--background-modifier-hover);
+    color: var(--text-normal);
+}
+
+/* Completed state in table layout */
+.taskly-plugin .task-card--layout-table.task-card--completed .task-card__col--name {
+    opacity: 0.6;
+}
+
+/* Responsive: narrower screens - reduce column widths */
+@media (max-width: 600px) {
+    .taskly-plugin .task-card--layout-table .task-card__main-row {
+        grid-template-columns: 20px 1fr 60px 60px 20px;
+        gap: var(--tn-spacing-sm);
+    }
+}
+
+/* =================================================================
+   MOBILE TABLE: Collapse grid into clean card-list
+   Drops DUE + ADDED columns entirely. Simple: dot | name+tags | menu
+   ================================================================= */
+
+body.is-mobile .taskly-plugin .tn-table-header {
+    grid-template-columns: 22px 1fr;
+    gap: var(--tn-spacing-sm);
+    padding: 6px 12px;
+}
+
+body.is-mobile .taskly-plugin .tn-table-header__col--due,
+body.is-mobile .taskly-plugin .tn-table-header__col--date,
+body.is-mobile .taskly-plugin .tn-table-header__col--menu {
+    display: none;
+}
+
+body.is-mobile .taskly-plugin .task-card--layout-table {
+    padding: 12px 12px;
+    min-height: 44px;
+    flex-shrink: 0;
+}
+
+body.is-mobile .taskly-plugin .task-card--layout-table .task-card__main-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    overflow: visible;
+}
+
+/* Status dot: touch-friendly */
+body.is-mobile .taskly-plugin .task-card--layout-table .task-card__status-dot {
+    width: 20px;
+    height: 20px;
+    border-width: 2px;
+    opacity: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Name column: takes all remaining space, wraps naturally */
+body.is-mobile .taskly-plugin .task-card--layout-table .task-card__col--name {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 8px;
+    line-height: 1.45;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+}
+
+body.is-mobile .taskly-plugin .task-card--layout-table .task-card__col--name .task-card__title-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 0.9375rem;
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* Hide tags on mobile — cleaner, uniform row height */
+body.is-mobile .taskly-plugin .task-card--layout-table .task-card__tags-inline {
+    display: none;
+}
+
+/* Hide DUE and ADDED columns — not needed on mobile */
+body.is-mobile .taskly-plugin .task-card--layout-table .task-card__col--due,
+body.is-mobile .taskly-plugin .task-card--layout-table .task-card__col--date {
+    display: none;
+}
+
+/* Context menu: always lightly visible */
+body.is-mobile .taskly-plugin .task-card--layout-table .task-card__context-menu {
+    opacity: 0.35;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    margin-top: 0;
+}
+
+body.is-mobile .taskly-plugin .task-card--layout-table .task-card__context-menu svg {
+    width: 15px;
+    height: 15px;
+}
+
+/* =================================================================
+   COMPACT LAYOUT (for future use)
+   ================================================================= */
+
+/* Compact layout - smaller padding but still vertical */
+.taskly-plugin .task-card--layout-compact {
+    padding: var(--tn-spacing-xs) var(--tn-spacing-sm);
+}
+
+.taskly-plugin .task-card--layout-compact .task-card__main-row {
+    gap: var(--tn-spacing-xs);
+}
+
+.taskly-plugin .task-card--layout-compact .task-card__title {
+    font-size: var(--tn-font-size-sm);
+}
+
+.taskly-plugin .task-card--layout-compact .task-card__metadata {
+    font-size: var(--tn-font-size-xs);
+    gap: var(--tn-spacing-xs);
+}
+
+.taskly-plugin .task-card--layout-compact .task-card__status-dot {
+    width: 14px;
+    height: 14px;
+}
+
+.taskly-plugin .task-card--layout-compact .task-card__badges {
+    gap: 2px;
+}
+
+.taskly-plugin .task-card--layout-compact .task-card__recurring-indicator,
+.taskly-plugin .task-card--layout-compact .task-card__reminder-indicator {
+    width: 12px;
+    height: 12px;
+}
+
+.taskly-plugin .task-card--layout-compact .task-card__context-menu {
+    width: 12px;
+    height: 12px;
+}
+
+/* =================================================================
+   SELECTION MODE STYLES
+   ================================================================= */
+
+
+/* Selected task card styling */
+.taskly-plugin .task-card--selected {
+    background-color: color-mix(in srgb, var(--interactive-accent) 15%, transparent);
+    border-radius: var(--tn-radius-sm);
+}
+
+.taskly-plugin .task-card--selected:hover {
+    background-color: color-mix(in srgb, var(--interactive-accent) 20%, transparent);
+}
+
+/* Primary selected task (first selected) gets a border */
+.taskly-plugin .task-card--selected-primary {
+    box-shadow: inset 0 0 0 2px var(--interactive-accent);
+}
+
+
+/* Selection indicator floating badge */
+.taskly-plugin .tn-selection-indicator {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--interactive-accent);
+    color: var(--text-on-accent);
+    padding: 8px 16px;
+    border-radius: var(--tn-radius-md);
+    font-size: var(--tn-font-size-sm);
+    font-weight: 500;
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--tn-shadow-color, black) 20%, transparent);
+    z-index: 100;
+    display: none;
+    animation: tn-selection-indicator-appear 0.2s ease-out;
+    transition: background-color var(--tn-transition-fast);
+}
+
+.taskly-plugin .tn-selection-indicator:hover {
+    background-color: var(--interactive-accent-hover);
+}
+
+@keyframes tn-selection-indicator-appear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

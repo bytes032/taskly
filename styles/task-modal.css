@@ -1,0 +1,1358 @@
+/* =====================================================================
+   TASK MODAL - Google Keep/Todoist Inspired
+   ===================================================================== */
+
+/* Fix suggestion text truncation */
+.suggestion-item .nlp-suggest-text {
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+    max-width: none;
+    width: auto;
+}
+
+/* =====================================================================
+   EMBEDDABLE MARKDOWN EDITOR
+   ===================================================================== */
+
+.details-markdown-editor {
+    margin-bottom: var(--size-4-3);
+    border: 1px solid color-mix(in srgb, var(--background-modifier-border) 70%, transparent);
+    border-radius: 10px;
+    overflow: hidden;
+    height: 150px;
+    max-height: 400px;
+    background: color-mix(in srgb, var(--background-primary-alt) 30%, transparent);
+    display: flex;
+    flex-direction: column;
+    transition:
+        border-color 0.15s ease,
+        background-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.details-markdown-editor:hover {
+    border-color: var(--background-modifier-border);
+    background: color-mix(in srgb, var(--background-primary-alt) 50%, transparent);
+}
+
+.details-markdown-editor:focus-within {
+    border-color: color-mix(in srgb, var(--interactive-accent) 40%, var(--background-modifier-border));
+    background: var(--background-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--interactive-accent) 8%, transparent);
+}
+
+/* Remove inner focus ring from CodeMirror content */
+.details-markdown-editor .cm-content:focus,
+.details-markdown-editor .cm-content:focus-visible,
+.nl-markdown-editor .cm-content:focus,
+.nl-markdown-editor .cm-content:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+.details-markdown-editor .task-details-editor {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make the editor fill the container */
+.details-markdown-editor .cm-editor {
+    flex: 1;
+    height: 100% !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.details-markdown-editor .cm-scroller {
+    flex: 1 !important;
+    height: 100% !important;
+    overflow: auto;
+    padding: 10px 12px 16px 12px !important;
+    cursor: text;
+    min-height: 120px;
+}
+
+/* Make content area fill and allow multi-line editing */
+.details-markdown-editor .cm-content {
+    padding: 0 !important;
+    font-family: var(--font-text);
+    font-size: var(--font-ui-medium);
+    line-height: var(--line-height-normal);
+}
+
+/* Placeholder styling */
+.details-markdown-editor .cm-placeholder {
+    color: var(--text-faint);
+    font-style: italic;
+    pointer-events: none;
+}
+
+/* =====================================================================
+   NLP MARKDOWN EDITOR
+   ===================================================================== */
+
+.nl-markdown-editor {
+    margin-bottom: var(--size-4-2);
+    border: 1px solid color-mix(in srgb, var(--background-modifier-border) 70%, transparent);
+    border-radius: 10px;
+    overflow: hidden;
+    min-height: 80px;
+    max-height: 200px;
+    background: color-mix(in srgb, var(--background-primary-alt) 30%, transparent);
+    transition:
+        border-color var(--tn-duration-fast) ease,
+        background-color var(--tn-duration-fast) ease,
+        box-shadow var(--tn-duration-fast) ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.nl-markdown-editor:hover {
+    border-color: var(--background-modifier-border);
+    background: color-mix(in srgb, var(--background-primary-alt) 50%, transparent);
+}
+
+.nl-markdown-editor .nlp-editor {
+    flex: 1;
+    min-height: 60px;
+    max-height: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.nl-markdown-editor .cm-editor {
+    flex: 1;
+    height: 100% !important;
+    min-height: 60px;
+    max-height: 200px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Focus state for NLP editor */
+.nl-markdown-editor:focus-within {
+    border-color: color-mix(in srgb, var(--interactive-accent) 40%, var(--background-modifier-border));
+    background: var(--background-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--interactive-accent) 8%, transparent);
+}
+
+.nl-markdown-editor:focus-within .cm-editor {
+    background: transparent;
+}
+
+.nl-markdown-editor .cm-scroller {
+    flex: 1 !important;
+    overflow: auto;
+    max-height: 200px;
+    padding: 10px 12px 16px 12px !important;
+    cursor: text;
+    min-height: 60px;
+}
+
+.nl-markdown-editor .cm-content {
+    padding: 0 !important;
+    font-family: var(--font-text);
+    font-size: var(--font-ui-medium);
+    line-height: 1.5;
+}
+
+/* Prevent iOS auto-zoom on input focus (requires >= 16px) */
+body.is-mobile .nl-markdown-editor .cm-content {
+    font-size: max(var(--font-ui-medium), 16px);
+}
+
+body.is-mobile .details-markdown-editor .cm-content {
+    font-size: max(var(--font-ui-medium), 16px);
+}
+
+
+.nl-markdown-editor .cm-placeholder {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+
+/* =====================================================================
+   CODEMIRROR AUTOCOMPLETE STYLING (for NLP triggers)
+   Scoped to Taskly modals only
+   ===================================================================== */
+
+/* Main autocomplete tooltip - scoped to Taskly modals */
+.taskly-plugin .cm-tooltip-autocomplete {
+    background-color: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-m);
+    box-shadow: var(--shadow-s);
+    padding: var(--size-4-1);
+    font-family: var(--font-ui);
+    font-size: var(--font-ui-small);
+	z-index: 9999;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Autocomplete list */
+.taskly-plugin .cm-tooltip-autocomplete ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Individual completion option */
+.taskly-plugin .cm-tooltip-autocomplete li {
+    padding: var(--size-4-2) var(--size-4-3);
+    cursor: var(--cursor);
+    border-radius: var(--radius-s);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--size-4-2);
+}
+
+/* Hovered option */
+.taskly-plugin .cm-tooltip-autocomplete li:hover,
+.taskly-plugin .cm-tooltip-autocomplete li[aria-selected="true"] {
+    background-color: var(--background-modifier-hover);
+}
+
+/* Selected option */
+.taskly-plugin .cm-tooltip-autocomplete li[aria-selected="true"] {
+    background-color: var(--background-modifier-active-hover);
+}
+
+/* Completion label (main text) */
+.taskly-plugin .cm-completionLabel {
+    flex: 1;
+    color: var(--text-normal);
+    font-weight: 500;
+}
+
+/* Completion info (right side) */
+.taskly-plugin .cm-completionInfo {
+    color: var(--text-muted);
+    font-size: var(--font-ui-smaller);
+    font-weight: normal;
+}
+
+/* Completion detail (description) */
+.taskly-plugin .cm-completionDetail {
+    color: var(--text-faint);
+    font-size: var(--font-ui-smaller);
+    margin-left: var(--size-4-2);
+}
+
+/* Icon for different completion types */
+.taskly-plugin .cm-completionIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: var(--size-4-2);
+    color: var(--text-muted);
+}
+
+/* Match highlighting in completion */
+.taskly-plugin .cm-completionMatchedText {
+    text-decoration: underline;
+    color: var(--color-accent);
+}
+
+.taskly-plugin.minimalist-task-modal {
+    /* Modal container adjustments */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* Modal header with Taskly icon */
+.modal-header-container {
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-2);
+    margin-bottom: var(--size-4-3);
+}
+
+.modal-header-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    color: var(--color-accent);
+    width: 20px;
+    height: 20px;
+}
+
+.modal-header-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+    color: var(--color-accent);
+}
+
+/* User fields section styling */
+.user-fields-separator {
+    margin-top: var(--size-4-4);
+    border-top: 0.5px solid var(--background-modifier-border);
+    padding-top: var(--size-4-3);
+}
+
+/* Section separator between field groups */
+.taskly-plugin .task-modal__section-separator {
+    border: none;
+    border-top: 0.5px solid var(--background-modifier-border);
+    margin: var(--size-4-3) 0;
+}
+
+.detail-label-section {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.modal-header-icon .svg-icon {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.modal-header-icon .taskly-simple {
+    width: 20px !important;
+    height: 20px !important;
+    color: var(--color-accent) !important;
+}
+
+.modal-header-title {
+    font-size: var(--font-ui-larger);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-normal);
+}
+
+.taskly-plugin.minimalist-task-modal .modal-content {
+    padding: 0;
+    border-radius: var(--radius-l);
+    box-shadow: var(--shadow-l);
+    min-width: min(480px, 92vw);
+    max-width: 600px;
+}
+
+.taskly-plugin .minimalist-modal-container {
+    padding: 24px;
+    background: var(--modal-background);
+}
+
+/* Override shadow variable inside the modal, then re-apply outer shadow explicitly */
+.theme-light .taskly-plugin.minimalist-task-modal,
+.theme-dark .taskly-plugin.minimalist-task-modal {
+    --shadow-l: none;
+}
+
+/* Re-apply outer shadow to the modal element itself */
+.taskly-plugin.minimalist-task-modal > .modal,
+.taskly-plugin.minimalist-task-modal .modal {
+    box-shadow: var(--tn-shadow-elevated);
+    border: 1px solid color-mix(in srgb, var(--background-modifier-border) 50%, transparent);
+    border-radius: 12px;
+    animation: modal-enter var(--tn-duration-normal) var(--tn-ease-out-expo);
+}
+
+@keyframes modal-enter {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* =====================================================================
+   TITLE INPUT - PRIMARY FOCUS
+   ===================================================================== */
+
+.taskly-plugin .title-input-container {
+    margin-bottom: var(--size-4-3);
+}
+
+.taskly-plugin .title-input {
+    width: 100%;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    padding: 12px 8px;
+    margin: -8px -8px 8px -8px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    background: transparent;
+    color: var(--text-normal);
+    resize: none;
+    min-height: 44px;
+    transition:
+        background-color var(--tn-duration-fast) ease,
+        box-shadow var(--tn-duration-fast) ease;
+}
+
+.taskly-plugin .title-input::placeholder {
+    color: var(--text-faint);
+    font-weight: 500;
+}
+
+.taskly-plugin .title-input:hover {
+    background: color-mix(in srgb, var(--background-modifier-hover) 50%, transparent);
+}
+
+.taskly-plugin .title-input:focus,
+.taskly-plugin .title-input:active,
+.taskly-plugin .title-input:focus-visible {
+    background: var(--background-modifier-hover);
+    border-radius: 8px;
+    outline: none;
+    box-shadow: none;
+}
+
+/* =====================================================================
+   ACTION BAR - ICON-BASED CONTROLS
+   ===================================================================== */
+
+.taskly-plugin .action-bar {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin: 0 0 12px 0;
+    padding: 6px 0;
+    border-bottom: none;
+}
+
+.taskly-plugin .action-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: var(--cursor);
+    opacity: 0.8;
+    transition:
+        background-color var(--tn-duration-fast) ease,
+        opacity var(--tn-duration-fast) ease,
+        transform var(--tn-duration-fast) var(--tn-ease-out-back);
+    position: relative;
+}
+
+.taskly-plugin .action-icon:hover {
+    background: var(--background-modifier-hover);
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+.taskly-plugin .action-icon:active {
+    transform: translateY(0) scale(0.95);
+}
+
+.taskly-plugin .action-icon:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--interactive-accent);
+    opacity: 1;
+}
+
+.taskly-plugin .action-icon .icon {
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+    transition: color var(--tn-duration-fast) ease;
+}
+
+.taskly-plugin .action-icon:hover .icon {
+    color: var(--text-normal);
+}
+
+/* Active state for icons when they have values - color the icon */
+.taskly-plugin .action-icon.has-value {
+    opacity: 1;
+}
+
+.taskly-plugin .action-icon.has-value .icon {
+    color: var(--interactive-accent);
+}
+
+/* =====================================================================
+   DETAILS SECTION - PROGRESSIVE DISCLOSURE
+   ===================================================================== */
+
+.taskly-plugin .details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 8px;
+    transition: all 0.3s ease;
+    transform-origin: top;
+}
+
+.taskly-plugin .detail-label {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--text-faint);
+    margin-bottom: 6px;
+    margin-top: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.8;
+}
+
+.taskly-plugin .detail-label:first-child {
+    margin-top: 0;
+}
+
+.taskly-plugin .title-input-detailed {
+    width: 100%;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    padding: 8px 10px;
+    line-height: 1.4;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-normal);
+    transition:
+        border-color var(--tn-duration-fast) ease,
+        box-shadow var(--tn-duration-fast) ease,
+        background-color var(--tn-duration-fast) ease;
+}
+
+.taskly-plugin .title-input-detailed:hover {
+    border-color: color-mix(in srgb, var(--background-modifier-border) 150%, transparent);
+}
+
+.taskly-plugin .title-input-detailed:focus,
+.taskly-plugin .title-input-detailed:active,
+.taskly-plugin .title-input-detailed:focus-visible {
+    outline: none;
+    box-shadow: none;
+    border-color: var(--interactive-accent);
+    background: transparent;
+}
+
+.taskly-plugin .title-input-detailed::placeholder {
+    color: var(--text-muted);
+}
+
+.taskly-plugin .details-input {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px 12px;
+    font-size: var(--font-ui-medium);
+    line-height: 1.5;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-normal);
+    resize: vertical;
+    transition:
+        border-color var(--tn-duration-fast) ease,
+        box-shadow var(--tn-duration-fast) ease,
+        background-color var(--tn-duration-fast) ease;
+}
+
+.taskly-plugin .details-input:hover {
+    border-color: color-mix(in srgb, var(--background-modifier-border) 150%, transparent);
+}
+
+.taskly-plugin .details-input:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+    box-shadow: none;
+    background: transparent;
+}
+
+.taskly-plugin .details-input::placeholder {
+    color: var(--text-muted);
+}
+
+
+/* =====================================================================
+   ADDITIONAL FIELDS - SETTINGS STYLE
+   ===================================================================== */
+
+.taskly-plugin .details-container .setting-item {
+    border: none;
+    padding: 8px 0;
+    gap: 8px;
+}
+
+.taskly-plugin .details-container .setting-item-info {
+    flex: 0 0 auto;
+    min-width: 80px;
+    max-width: 100px;
+}
+
+.taskly-plugin .details-container .setting-item-name {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.taskly-plugin .details-container .setting-item-description {
+    display: none;
+}
+
+.taskly-plugin .details-container .setting-item-control {
+    flex: 1;
+    justify-content: flex-start;
+}
+
+.taskly-plugin .details-container .setting-item-control input {
+    background: transparent;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: var(--radius-s);
+    padding: var(--size-4-1) var(--size-4-2);
+    font-size: var(--font-ui-medium);
+    transition: all 0.2s ease;
+}
+
+.taskly-plugin .details-container .setting-item-control input:focus {
+    border-color: var(--interactive-accent);
+    background: transparent;
+    outline: none;
+}
+
+/* Compact inputs in details */
+.taskly-plugin .details-container .setting-item-control input[type="text"],
+.taskly-plugin .details-container .setting-item-control input[type="number"] {
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 0.8125rem;
+    border-radius: 5px;
+}
+
+.taskly-plugin .details-container select,
+.taskly-plugin .details-container .dropdown {
+    padding: 6px 10px;
+    font-size: 0.8125rem;
+    min-width: 120px;
+}
+
+/* Section separators */
+.taskly-plugin .task-modal__section-separator {
+    margin: 12px 0;
+    border-color: color-mix(in srgb, var(--background-modifier-border) 40%, transparent);
+}
+
+.taskly-plugin .user-fields-separator {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-color: color-mix(in srgb, var(--background-modifier-border) 40%, transparent);
+}
+
+/* Details container field labels */
+.taskly-plugin .details-container .detail-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    margin-top: 14px;
+    margin-bottom: 4px;
+}
+
+.taskly-plugin .details-container .detail-label:first-child {
+    margin-top: 0;
+}
+
+/* Tags input */
+.taskly-plugin .details-container .tag-input-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 6px 8px;
+    min-height: 32px;
+    border-radius: 6px;
+    border: 1px solid var(--background-modifier-border);
+    background: transparent;
+    transition: border-color var(--tn-duration-fast) ease,
+                box-shadow var(--tn-duration-fast) ease;
+}
+
+.taskly-plugin .details-container .tag-input-container:focus-within {
+    border-color: var(--interactive-accent);
+    box-shadow: none;
+}
+
+/* =====================================================================
+   OPEN NOTE BUTTON (IN BUTTON BAR)
+   ===================================================================== */
+
+.taskly-plugin .open-note-button {
+    padding: var(--size-4-2) var(--size-4-3);
+    font-weight: 500;
+    border: 1px solid var(--interactive-accent);
+    border-radius: var(--radius-s);
+    background: transparent;
+    color: var(--interactive-accent);
+    cursor: var(--cursor);
+    transition: all 0.2s ease;
+    min-width: 80px;
+}
+
+.taskly-plugin .open-note-button:hover {
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border: 1px solid var(--interactive-accent);
+}
+
+.taskly-plugin .open-note-button:active {
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border: 1px solid var(--interactive-accent);
+}
+
+.taskly-plugin .open-note-button:focus-visible {
+	box-shadow: 0 0 0 3px var(--background-modifier-border-focus);
+}
+
+.taskly-plugin .archive-button:focus-visible {
+	box-shadow: 0 0 0 3px var(--background-modifier-border-focus);
+}
+
+/* =====================================================================
+   MODAL BUTTON CONTAINER - Native Obsidian style
+   ===================================================================== */
+
+/* Use native modal-button-container class */
+.modal.mod-taskly .modal-button-container {
+    display: flex;
+    gap: var(--size-4-2);
+    border-top: none;
+    margin-top: var(--size-4-4);
+}
+
+/* Push Save/Cancel buttons to the right on desktop only */
+body:not(.is-mobile) .modal.mod-taskly .modal-button-container .mod-cta {
+    margin-left: auto;
+}
+
+/* Primary button (Save/Create) */
+.taskly-plugin .modal-button-container .mod-cta {
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border: none;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    transition:
+        background-color var(--tn-duration-fast) ease,
+        transform var(--tn-duration-fast) var(--tn-ease-out-back),
+        box-shadow var(--tn-duration-fast) ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.taskly-plugin .modal-button-container .mod-cta:hover {
+    background: var(--interactive-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px color-mix(in srgb, var(--interactive-accent) 25%, transparent);
+}
+
+.taskly-plugin .modal-button-container .mod-cta:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Secondary button (Cancel/Open Note) */
+.taskly-plugin .modal-button-container button:not(.mod-cta) {
+    background: transparent;
+    color: var(--text-muted);
+    border: none;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    transition:
+        background-color var(--tn-duration-fast) ease,
+        color var(--tn-duration-fast) ease;
+}
+
+.taskly-plugin .modal-button-container button:not(.mod-cta):hover {
+    background: var(--background-modifier-hover);
+    color: var(--text-normal);
+}
+
+/* Details markdown editor */
+.taskly-plugin .details-markdown-editor {
+    border-radius: 8px;
+    border: 1px solid var(--background-modifier-border);
+    min-height: 180px;
+    max-height: 350px;
+    overflow: hidden;
+    transition: border-color var(--tn-duration-fast) ease,
+                box-shadow var(--tn-duration-fast) ease;
+}
+
+.taskly-plugin .details-markdown-editor:hover {
+    border-color: color-mix(in srgb, var(--background-modifier-border) 150%, transparent);
+}
+
+.taskly-plugin .details-markdown-editor:focus-within {
+    border-color: var(--interactive-accent);
+    box-shadow: none;
+}
+
+/* Metadata section */
+.taskly-plugin .metadata-container {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top-color: color-mix(in srgb, var(--background-modifier-border) 40%, transparent);
+}
+
+.taskly-plugin .metadata-item {
+    font-size: 0.6875rem;
+}
+
+.taskly-plugin .metadata-key {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--text-faint);
+    min-width: 70px;
+}
+
+.taskly-plugin .metadata-value {
+    font-size: 0.6875rem;
+    color: var(--text-muted);
+}
+
+/* Compact action bar when expanded */
+.taskly-plugin.minimalist-task-modal.expanded .action-bar {
+    padding: 6px 0;
+    margin-bottom: 12px;
+    gap: 4px;
+}
+
+.taskly-plugin.minimalist-task-modal.expanded .action-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.taskly-plugin.minimalist-task-modal.expanded .action-icon .icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Button container spacing in expanded mode */
+.taskly-plugin.minimalist-task-modal.expanded .modal-button-container {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid color-mix(in srgb, var(--background-modifier-border) 40%, transparent);
+}
+
+/* =====================================================================
+   MODAL EXPANSION ANIMATION
+   ===================================================================== */
+
+.taskly-plugin.minimalist-task-modal .modal-content {
+    transition: all 0.3s ease;
+}
+
+.taskly-plugin.minimalist-task-modal.expanded .modal-content {
+    min-height: 400px;
+}
+
+/* =====================================================================
+   RESPONSIVE DESIGN
+   ===================================================================== */
+
+@media (max-width: 600px) {
+    .taskly-plugin.minimalist-task-modal .modal-content {
+        min-width: 92vw;
+        max-width: 92vw;
+    }
+
+    .taskly-plugin .minimalist-modal-container {
+        padding: var(--size-4-3);
+    }
+
+    .taskly-plugin .action-bar {
+        flex-wrap: wrap;
+        gap: var(--size-4-2);
+    }
+
+    .modal.mod-taskly .modal-button-container {
+        flex-direction: column;
+    }
+
+    .modal.mod-taskly .modal-button-container button {
+        width: 100%;
+    }
+
+    /* Reset margin for small screens on desktop too */
+    .modal.mod-taskly .modal-button-container .mod-cta {
+        margin-left: 0;
+    }
+
+    /* Detail field labels stack vertically on mobile */
+    .taskly-plugin .details-container .setting-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+    }
+
+    .taskly-plugin .details-container .setting-item-info {
+        min-width: unset;
+        max-width: unset;
+    }
+
+    .taskly-plugin .details-container .setting-item-control {
+        width: 100%;
+    }
+
+    .taskly-plugin .details-container select,
+    .taskly-plugin .details-container .dropdown {
+        min-width: unset;
+        width: 100%;
+    }
+
+    /* NLP editor compact on mobile */
+    .nl-markdown-editor {
+        min-height: 60px;
+    }
+
+    .nl-markdown-editor .cm-scroller {
+        min-height: 44px;
+        padding: 8px 10px 14px 10px !important;
+    }
+}
+
+/* =====================================================================
+   MOBILE (Obsidian .is-mobile) - Touch targets & spacing
+   ===================================================================== */
+
+body.is-mobile .taskly-plugin .action-icon {
+    width: 40px;
+    height: 40px;
+}
+
+body.is-mobile .taskly-plugin .action-icon .icon {
+    width: 18px;
+    height: 18px;
+}
+
+body.is-mobile .taskly-plugin .action-bar {
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+body.is-mobile .taskly-plugin .minimalist-modal-container {
+    padding: 16px;
+}
+
+body.is-mobile .taskly-plugin .nl-preview-container {
+    left: 10px;
+    right: 10px;
+    bottom: calc(var(--size-4-2) + 4px);
+}
+
+body.is-mobile .modal.mod-taskly .modal-button-container {
+    flex-direction: row;
+    gap: var(--size-4-2);
+}
+
+body.is-mobile .modal.mod-taskly .modal-button-container button {
+    flex: 1;
+    min-height: 44px;
+}
+
+/* =====================================================================
+   SPLIT LAYOUT - BASE STYLES (mobile/narrow screens)
+   On narrow screens, content flows vertically with details below title
+   ===================================================================== */
+
+/* Split content wrapper - use flex column for ordering on narrow screens */
+.taskly-plugin.minimalist-task-modal .modal-split-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Left column: contains title, action bar, and form fields */
+.taskly-plugin.minimalist-task-modal .modal-split-left {
+    display: contents;
+}
+
+/* Title input container - first item */
+.taskly-plugin.minimalist-task-modal .modal-split-left .title-input-container,
+.taskly-plugin.minimalist-task-modal .modal-split-left .nl-markdown-editor {
+    order: 1;
+}
+
+/* Action bar - second item */
+.taskly-plugin.minimalist-task-modal .modal-split-left .action-bar {
+    order: 2;
+}
+
+/* Right column: contains details editor - appears after action bar on narrow screens */
+.taskly-plugin.minimalist-task-modal .modal-split-right {
+    order: 3;
+}
+
+/* Details container (form fields) - after the details editor on narrow screens */
+.taskly-plugin.minimalist-task-modal .modal-split-left .details-container {
+    order: 4;
+}
+
+/* Additional sections (metadata) - last */
+.taskly-plugin.minimalist-task-modal .modal-split-left .metadata-container {
+    order: 5;
+}
+
+/* Hide empty right column indicator on narrow screens */
+.taskly-plugin.minimalist-task-modal .modal-split-right:empty {
+    display: none;
+}
+
+/* =====================================================================
+   SPLIT LAYOUT - WIDE SCREENS (900px+)
+   Details field appears on the right when modal is expanded
+   Only applies when split-layout-enabled class is present (controlled by setting)
+   ===================================================================== */
+
+@media (min-width: 900px) {
+    /* Widen modal for split layout when expanded */
+    /* Target both .modal (modalEl) and .modal-content for max compatibility */
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal,
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded.modal {
+        width: 850px;
+        max-width: 90vw;
+    }
+
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-content {
+        min-width: 100%;
+        max-width: 100%;
+        padding: 0;
+    }
+
+    /* Main container - no padding on right for edge-to-edge details */
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .minimalist-modal-container {
+        display: flex;
+        flex-direction: column;
+        padding-right: 0;
+    }
+
+    /* Split content wrapper - holds left and right columns side by side */
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-content {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        min-height: 0;
+        gap: 0;
+    }
+
+    /* Left column - reset display:contents and use flex column */
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-left {
+        flex: 0 0 380px;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        padding-right: var(--size-4-4);
+        overflow-y: auto;
+        max-height: 70vh;
+    }
+
+    /* Reset ordering for split layout - elements flow naturally in their DOM order */
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-left .title-input-container,
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-left .nl-markdown-editor,
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-left .action-bar,
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-left .details-container,
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-left .metadata-container,
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-right {
+        order: unset;
+    }
+
+    /* Right column - details editor takes full height, edge to edge */
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-right {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        border-left: 1px solid var(--background-modifier-border);
+        margin: calc(-1 * var(--size-4-4)) 0;
+        margin-right: calc(-1 * var(--size-4-4));
+        border-radius: 0;
+        max-height: 70vh;
+        overflow: hidden;
+    }
+
+    /* Hide empty right column on wide screens too */
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-right:empty {
+        display: none;
+    }
+
+    /* When right column is empty, left column takes full width */
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-right:empty ~ .modal-split-left,
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-content:has(.modal-split-right:empty) .modal-split-left {
+        flex: 1;
+        padding-right: 0;
+    }
+
+    /* Details label in right column */
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-right .detail-label {
+        margin: 0;
+        padding: var(--size-4-3) var(--size-4-4);
+        border-bottom: 1px solid var(--background-modifier-border);
+    }
+
+    /* Make details editor fill the right column completely */
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-right .details-markdown-editor {
+        flex: 1;
+        min-height: 0;
+        max-height: none;
+        display: flex;
+        flex-direction: column;
+        border: none;
+        border-radius: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-right .details-markdown-editor .cm-editor {
+        flex: 1;
+        max-height: none;
+        border-radius: 0;
+        min-height: 0;
+    }
+
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-right .details-markdown-editor .cm-scroller {
+        max-height: none;
+        overflow-y: auto;
+    }
+
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-right .details-markdown-editor .task-details-editor {
+        max-height: none;
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    /* Button container needs proper positioning */
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-button-container {
+        padding-right: var(--size-4-4);
+    }
+}
+
+/* =====================================================================
+   SPLIT LAYOUT - EXTRA WIDE SCREENS (1200px+)
+   Modal expands to 1100px on larger screens
+   ===================================================================== */
+
+@media (min-width: 1200px) {
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal,
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded.modal {
+        width: 1100px;
+    }
+
+    /* Left column gets more space on wider screens */
+    .taskly-plugin.minimalist-task-modal.split-layout-enabled.expanded .modal-split-left {
+        flex: 0 0 480px;
+    }
+}
+
+/* =====================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ===================================================================== */
+
+/* action-icon:focus-visible handled in the action-icon block above */
+
+.taskly-plugin .details-input:focus-visible {
+    outline: 2px solid var(--interactive-accent);
+    outline-offset: 1px;
+}
+
+/* =====================================================================
+   METADATA SECTION - FOR EDIT MODAL
+   ===================================================================== */
+
+.taskly-plugin .metadata-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-4-1);
+}
+
+/* =====================================================================
+   AUTOCOMPLETE STYLING
+   ===================================================================== */
+
+.taskly-plugin .autocomplete-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-top: none;
+    border-radius: 0 0 var(--radius-s) var(--radius-s);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.taskly-plugin .autocomplete-suggestion {
+    padding: 8px 12px;
+    cursor: var(--cursor);
+    border-bottom: 1px solid var(--background-modifier-border-hover);
+    font-size: var(--font-ui-small);
+    color: var(--text-normal);
+    transition: background-color 0.1s ease;
+}
+
+.taskly-plugin .autocomplete-suggestion:hover {
+    background: var(--background-modifier-hover);
+}
+
+.taskly-plugin .autocomplete-suggestion:last-child {
+    border-bottom: none;
+}
+
+/* =====================================================================
+   NLP INPUT STYLING UPDATES
+   ===================================================================== */
+
+.taskly-plugin .nl-input {
+    width: 100%;
+    padding: 10px 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-normal);
+    resize: vertical;
+    min-height: 80px;
+    transition:
+        border-color var(--tn-duration-fast) ease,
+        box-shadow var(--tn-duration-fast) ease,
+        background-color var(--tn-duration-fast) ease;
+}
+
+.taskly-plugin .nl-input:hover {
+    border-color: color-mix(in srgb, var(--background-modifier-border) 150%, transparent);
+}
+
+.taskly-plugin .nl-input:focus {
+    outline: none;
+    border-color: var(--interactive-accent);
+    background: transparent;
+    box-shadow: none;
+}
+
+.taskly-plugin .nl-input::placeholder {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Title input styled like NLP input for edit modal */
+.taskly-plugin .nl-title-input {
+    width: 100%;
+    padding: 10px 12px;
+    font-family: var(--font-text);
+    font-size: var(--font-ui-medium);
+    font-weight: 400;
+    line-height: var(--line-height-normal);
+    border: none;
+    background: transparent;
+    color: var(--text-normal);
+}
+
+.taskly-plugin .nl-title-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.taskly-plugin .nl-title-input::placeholder {
+    color: var(--text-faint);
+    font-style: italic;
+    font-weight: 400;
+}
+
+.taskly-plugin .nl-input-container {
+    position: relative;
+}
+
+.taskly-plugin .nl-preview-container {
+    position: absolute;
+    bottom: calc(var(--size-4-2) + 6px);
+    left: 12px;
+    right: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    opacity: 0;
+    transform: translateY(4px);
+    pointer-events: none;
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
+    z-index: 1;
+}
+
+.taskly-plugin .nl-preview-container.has-chips {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.taskly-plugin .nl-preview-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px 2px 5px;
+    border-radius: 4px;
+    background: var(--background-primary-alt);
+    border: 1px solid var(--background-modifier-border);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.taskly-plugin .nl-preview-chip__icon {
+    display: flex;
+    align-items: center;
+    color: var(--text-faint);
+}
+
+.taskly-plugin .nl-preview-chip__icon svg {
+    width: 12px;
+    height: 12px;
+}
+
+.taskly-plugin .nl-preview-chip__text {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* =====================================================================
+   DARK MODE ADJUSTMENTS
+   ===================================================================== */
+
+
+.theme-dark .taskly-plugin .autocomplete-suggestions {
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* NLP Auto-suggestion specific styles */
+.taskly-plugin .nlp-suggest-icon {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--interactive-accent);
+    margin-right: var(--size-2-2);
+    min-width: 14px;
+}
+
+.taskly-plugin .nlp-suggest-text {
+    color: var(--text-normal);
+}
